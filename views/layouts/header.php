@@ -13,38 +13,39 @@
 </head><!--/head-->
 
 <body>
-<header id="header"><!--header-->
+<div class="container">
+    <header id="header"><!--header-->
 
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">BeeJee</a>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">BeeJee</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/user/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="/user/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/user/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li><a href="/user/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-            </ul>
-        </div>
-    </nav>
-    <div class="header-middle"><!--header-middle-->
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="logo pull-left">
-                        <a href="index.html"><img src="/template/images/home/logo.png" alt=""/></a>
+        </nav>
+        <div class="header-middle"><!--header-middle-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="logo pull-left">
+                            <a href="index.html"><img src="/template/images/home/logo.png" alt=""/></a>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="shop-menu pull-right">
+                            <ul class="nav navbar-nav">
+
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-8">
-                    <div class="shop-menu pull-right">
-                        <ul class="nav navbar-nav">
-
-                        </ul>
-                    </div>
-                </div>
             </div>
-        </div>
-    </div><!--/header-middle-->
+        </div><!--/header-middle-->
 
 
 
-</header><!--/header-->
+    </header><!--/header-->
