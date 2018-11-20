@@ -8,8 +8,12 @@ use Models\TasksList;
 class SiteController
 {
 
-    public function actionIndex($page = 1): void
+    public function actionIndex($page): void
     {
+        if(empty($page))
+        {
+            $page = 1;
+        }
         $tasks = TasksList::getTaskLists(TasksList::SHOW_BY_DEFAULT,$page);
 
         $totalTasks = TasksList::getTotalTasks();

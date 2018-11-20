@@ -12,7 +12,7 @@ class RoutePaths
             'user/logout' => 'user/logout',
 
             'page-([0-9]+)' => 'site/index/$1',
-            '' => 'site/index/1',
+            '' => 'site/index/',
         );
     }
 }
