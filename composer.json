@@ -1,0 +1,16 @@
+{
+  "name": "php-mvc-project",
+  "description": "BeeJee TestWork",
+  "authors": [
+    {
+      "name": "Vlad Kudinov"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Components\\": "components",
+      "Models\\": "models",
+      "Controllers\\": "controllers"
+    }
+  }
+}
