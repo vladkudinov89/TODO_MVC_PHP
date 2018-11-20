@@ -31,9 +31,8 @@ class Router
                 $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
 
                 $segments = explode('/', $internalRoute);
-
-                $controllerName = array_shift($segments) . 'Controller';
-                $controllerName = 'Controllers\\' . ucfirst($controllerName);
+                print_r($segments);
+                $controllerName = 'Controllers\\' . ucfirst(array_shift($segments) . 'Controller');
 
                 $actionName = 'action' . ucfirst(array_shift($segments));
 
