@@ -31,13 +31,16 @@ class Router
                 $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
 
                 $segments = explode('/', $internalRoute);
-                print_r($segments);
+
                 $controllerName = 'Controllers\\' . ucfirst(array_shift($segments) . 'Controller');
 
                 $actionName = 'action' . ucfirst(array_shift($segments));
 
-                call_user_func_array(array(new $controllerName, $actionName), $segments);
+                $result = call_user_func_array(array(new $controllerName, $actionName), $segments);
 
+                if ($result != null) {
+                    break;
+                }
             }
         }
 

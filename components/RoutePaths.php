@@ -11,7 +11,8 @@ class RoutePaths
             'user/login' => 'user/login',
             'user/logout' => 'user/logout',
 
-            '' => 'site/index',
+            'page-([0-9]+)' => 'site/index/$1',
+            '' => 'site/index/1',
         );
     }
 }

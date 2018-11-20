@@ -12,11 +12,11 @@ class User
 
         $db = Db::getConnection();
 
-        $sql = 'INSERT INTO users (name, email, password) '
-            . 'VALUES (:name, :email, :password)';
+        $sql = 'INSERT INTO users (username, email, password) '
+            . 'VALUES (:username, :email, :password)';
 
         $result = $db->prepare($sql);
-        $result->bindParam(':name', $name, PDO::PARAM_STR);
+        $result->bindParam(':username', $name, PDO::PARAM_STR);
         $result->bindParam(':email', $email, PDO::PARAM_STR);
         $result->bindParam(':password', $password, PDO::PARAM_STR);
 
