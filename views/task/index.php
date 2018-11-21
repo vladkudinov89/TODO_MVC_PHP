@@ -1,5 +1,9 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
 
+    <div class="form-group">
+        <a href="task/add" class="btn btn-success btn-lg">Add Task</a>
+    </div>
+
     <table class="table">
         <thead>
         <tr>
@@ -11,17 +15,17 @@
         </thead>
         <tbody>
 
-            <?php
-            $i = 1;
-            foreach ($tasks as $task) {
-                ?>
+        <?php
+        $i = 1;
+        foreach ($tasks as $task) {
+            ?>
             <tr>
                 <td><?php echo $i++ ?></td>
                 <td><?php echo $task['task_name'] ?></td>
                 <td><?php echo $task['username'] ?></td>
                 <td><?php echo $task['email'] ?></td>
             </tr>
-            <?php } ?>
+        <?php } ?>
 
         </tbody>
     </table>

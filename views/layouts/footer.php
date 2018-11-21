@@ -1,11 +1,7 @@
 <footer id="footer"><!--Footer-->
     <div class="footer-bottom">
-        <div class="container">
-            <div class="row">
-                <p class="pull-left">Copyright © 2018</p>
-                <p class="pull-right">MVC PHP</p>
-            </div>
-        </div>
+        <p class="pull-left">Copyright © 2018</p>
+        <p class="pull-right">MVC PHP</p>
     </div>
 </footer><!--/Footer-->
 

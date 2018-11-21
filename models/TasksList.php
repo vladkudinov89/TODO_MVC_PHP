@@ -51,4 +51,19 @@ class TasksList
         $row = $result->fetch();
         return $row['count'];
     }
+
+    public static function add($taskName,$taskText)
+    {
+
+        $db = Db::getConnection();
+
+        $sql = 'INSERT INTO task_list (task_name , task_text , user_id) '
+            . 'VALUES (:task_name,:task_text , 4)';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':task_name', $taskName, \PDO::PARAM_STR);
+        $result->bindParam(':task_text', $taskText, \PDO::PARAM_STR);
+
+        return $result->execute();
+    }
 }
