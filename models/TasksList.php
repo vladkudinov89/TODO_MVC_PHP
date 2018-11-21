@@ -20,7 +20,10 @@ class TasksList
         $tasksList = array();
 
         $result = $db->query('SELECT u.username , u.email , t.task_name
-        from (select * from task_list limit ' . $count . ' offset ' . $offset . ')  as t
+        from (select * from task_list 
+        order by task_list.created_at DESC 
+        limit ' . $count . ' offset ' . $offset . '
+        )  as t
         left join users u
            on u.id = t.user_id'
         );
