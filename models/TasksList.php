@@ -19,7 +19,7 @@ class TasksList
 
         $tasksList = array();
 
-        $result = $db->query('SELECT u.username , u.email , t.task_name
+        $result = $db->query('SELECT u.username , u.email , t.task_name , t.is_complete
         from (select * from task_list 
         order by task_list.created_at DESC 
         limit ' . $count . ' offset ' . $offset . '
@@ -34,6 +34,7 @@ class TasksList
                $tasksList[$i]['task_name'] = $row['task_name'];
                $tasksList[$i]['username'] = $row['username'];
                $tasksList[$i]['email'] = $row['email'];
+               $tasksList[$i]['is_complete'] = $row['is_complete'];
                $i++;
            }
 
@@ -65,5 +66,10 @@ class TasksList
         $result->bindParam(':task_text', $taskText, \PDO::PARAM_STR);
 
         return $result->execute();
+    }
+
+    public static function isTaskComplete()
+    {
+
     }
 }

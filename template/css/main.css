@@ -63,3 +63,9 @@ a#scrollUp {
   border-color: #000;
   color: #fff;
 }
+
+.not-complete{
+  text-decoration: line-through;
+  color: #000;
+  font-weight: bold;
+}

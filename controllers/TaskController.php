@@ -33,8 +33,6 @@ class TaskController
         {
             $taskName = $_POST['taskname'];
             $taskText = $_POST['tasktext'];
-            print_r($taskName);
-            print_r($taskText);
 
             $errors = false;
 

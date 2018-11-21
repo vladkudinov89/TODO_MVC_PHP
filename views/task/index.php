@@ -19,7 +19,13 @@
         $i = 1;
         foreach ($tasks as $task) {
             ?>
-            <tr>
+            <tr class="<?php
+            if( $task['is_complete'] == true )
+            {
+               echo 'not-complete';
+            } else {
+                echo '';
+            }  ?>">
                 <td><?php echo $i++ ?></td>
                 <td><?php echo $task['task_name'] ?></td>
                 <td><?php echo $task['username'] ?></td>
