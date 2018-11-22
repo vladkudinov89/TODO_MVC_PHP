@@ -74,13 +74,19 @@ class UserController
             } else {
                 User::auth($userId);
 
-                header("Location: /cabinet/");
+                header("Location: /");
             }
         }
 
         require_once(ROOT . '/views/user/login.php');
 
         return true;
+    }
+
+    public function actionLogout()
+    {
+        unset($_SESSION['user']);
+        header("Location: /");
     }
 
 }

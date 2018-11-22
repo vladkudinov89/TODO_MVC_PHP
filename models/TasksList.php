@@ -19,26 +19,26 @@ class TasksList
 
         $tasksList = array();
 
-        $result = $db->query('SELECT u.username , u.email , t.task_name , t.is_complete
+        $result = $db->query('SELECT u.username , u.email , t.task_name , t.is_complete , t.id as task_id
         from (select * from task_list 
-        order by task_list.created_at DESC 
+        order by task_list.id DESC 
         limit ' . $count . ' offset ' . $offset . '
         )  as t
         left join users u
            on u.id = t.user_id'
         );
-       if($result)
-       {
-           $i = 0;
-           while ($row = $result->fetch()) {
-               $tasksList[$i]['task_name'] = $row['task_name'];
-               $tasksList[$i]['username'] = $row['username'];
-               $tasksList[$i]['email'] = $row['email'];
-               $tasksList[$i]['is_complete'] = $row['is_complete'];
-               $i++;
-           }
+        if ($result) {
+            $i = 0;
+            while ($row = $result->fetch()) {
+                $tasksList[$i]['task_id'] = $row['task_id'];
+                $tasksList[$i]['task_name'] = $row['task_name'];
+                $tasksList[$i]['username'] = $row['username'];
+                $tasksList[$i]['email'] = $row['email'];
+                $tasksList[$i]['is_complete'] = $row['is_complete'];
+                $i++;
+            }
 
-       }
+        }
         return $tasksList;
     }
 
@@ -53,7 +53,7 @@ class TasksList
         return $row['count'];
     }
 
-    public static function add($taskName,$taskText)
+    public static function add($taskName, $taskText)
     {
 
         $db = Db::getConnection();
@@ -68,8 +68,51 @@ class TasksList
         return $result->execute();
     }
 
-    public static function isTaskComplete()
+    public static function taskComplete($taskId)
     {
+        $db = Db::getConnection();
 
+        $sql = 'UPDATE task_list SET is_complete = 1 WHERE id = :taskId';
+
+         $result = $db->prepare($sql);
+         $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
+
+        return $result->execute();
+    }
+
+    public static function taskRollback($taskId)
+    {
+        $db = Db::getConnection();
+
+        $sql = 'UPDATE task_list SET is_complete = 0 WHERE id = :taskId';
+
+         $result = $db->prepare($sql);
+         $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
+
+        return $result->execute();
+    }
+
+    public static function taskEdit($taskId)
+    {
+        $db = Db::getConnection();
+
+//        $sql = 'UPDATE task_list SET is_complete = 0 WHERE id = :taskId';
+//
+//         $result = $db->prepare($sql);
+//         $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
+//
+//        return $result->execute();
+    }
+
+    public static function taskDelete($taskId)
+    {
+        $db = Db::getConnection();
+
+        $sql = 'DELETE FROM app.task_list WHERE id = :taskId';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
+
+        return $result->execute();
     }
 }
