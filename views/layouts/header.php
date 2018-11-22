@@ -22,8 +22,12 @@
                     <a class="navbar-brand" href="/">BeeJee</a>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/user/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="/user/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <?php if (\Models\User::isGuest()) : ?>
+                        <li><a href="/user/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <!--                        <li><a href="/user/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
+                    <?php else: ?>
+                        <li><a href="/user/logout/"><i class="fa fa-unlock"></i> Logout</a></li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </nav>
@@ -47,5 +51,4 @@
         </div><!--/header-middle-->
 
 
-
-    </header><!--/header-->
+    </header>
