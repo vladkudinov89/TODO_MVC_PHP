@@ -1,5 +1,22 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
 
+<?php //if (isset($messages) && is_array($messages)): ?>
+<!--    <ul>-->
+<!--        --><?php //foreach ($messages as $message): ?>
+<!--            <li  class="alert alert-success"> - --><?php //echo $message; ?><!--</li>-->
+<!--        --><?php //endforeach; ?>
+<!--    </ul>-->
+<!---->
+<?php //endif; ?>
+<!---->
+<?php //if (isset($errors) && is_array($errors)): ?>
+<!--    <ul>-->
+<!--        --><?php //foreach ($errors as $error): ?>
+<!--            <li class="alert alert-danger"> - --><?php //echo $error; ?><!--</li>-->
+<!--        --><?php //endforeach; ?>
+<!--    </ul>-->
+<?php //endif; ?>
+
 <div class="form-group">
     <div class="pull-left">
         <a href="task/add" class="btn btn-success btn-lg">Add Task</a>
@@ -21,6 +38,7 @@
         <th scope="col">Task name</th>
         <th scope="col">Username</th>
         <th scope="col">Email</th>
+        <th scope="col">Image</th>
         <?php if (!\Models\User::isGuest()): ?>
             <th scope="col">Action's Task</th>
         <?php endif; ?>
@@ -47,6 +65,8 @@
             <td><?php echo $task['task_name'] ?></td>
             <td><?php echo $task['username'] ?></td>
             <td><?php echo $task['email'] ?></td>
+            <td><img style="width:220px; height: 120px;" src="<?php echo $task['task_img'] ?>" alt=""></td>
+
             <?php if (!\Models\User::isGuest()): ?>
                 <td>
                     <?php if (!$task['is_complete']) : ?>

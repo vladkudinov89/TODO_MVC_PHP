@@ -31,24 +31,21 @@
                 </ul>
             </div>
         </nav>
-        <div class="header-middle"><!--header-middle-->
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="logo pull-left">
-                            <a href="index.html"><img src="/template/images/home/logo.png" alt=""/></a>
-                        </div>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="shop-menu pull-right">
-                            <ul class="nav navbar-nav">
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!--/header-middle-->
-
-
     </header>
+
+    <?php if (isset($messages) && is_array($messages)): ?>
+    <ul>
+        <?php foreach ($messages as $message): ?>
+            <li  class="alert alert-success"> - <?php echo $message; ?></li>
+        <?php endforeach; ?>
+    </ul>
+
+<?php endif; ?>
+
+    <?php if (isset($errors) && is_array($errors)): ?>
+        <ul>
+            <?php foreach ($errors as $error): ?>
+                <li class="alert alert-danger"> - <?php echo $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>

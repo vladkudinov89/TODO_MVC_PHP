@@ -19,7 +19,7 @@ class TasksList
 
         $tasksList = array();
 
-        $result = $db->query('SELECT u.username , u.email , t.task_name , t.is_complete , t.id as task_id
+        $result = $db->query('SELECT u.username , u.email , t.task_name , t.task_img, t.is_complete , t.id as task_id
         from (select * from task_list 
         order by task_list.id DESC 
         limit ' . $count . ' offset ' . $offset . '
@@ -34,6 +34,7 @@ class TasksList
                 $tasksList[$i]['task_name'] = $row['task_name'];
                 $tasksList[$i]['username'] = $row['username'];
                 $tasksList[$i]['email'] = $row['email'];
+                $tasksList[$i]['task_img'] = $row['task_img'];
                 $tasksList[$i]['is_complete'] = $row['is_complete'];
                 $i++;
             }
@@ -53,17 +54,18 @@ class TasksList
         return $row['count'];
     }
 
-    public static function add($taskName, $taskText)
+    public static function add($taskName, $taskText , $task_img)
     {
 
         $db = Db::getConnection();
 
-        $sql = 'INSERT INTO task_list (task_name , task_text , user_id) '
-            . 'VALUES (:task_name,:task_text , 4)';
+        $sql = 'INSERT INTO task_list (task_name , task_text , user_id , task_img) '
+            . 'VALUES (:task_name,:task_text , 4 , :task_img)';
 
         $result = $db->prepare($sql);
         $result->bindParam(':task_name', $taskName, \PDO::PARAM_STR);
         $result->bindParam(':task_text', $taskText, \PDO::PARAM_STR);
+        $result->bindParam(':task_img', $task_img, \PDO::PARAM_STR);
 
         return $result->execute();
     }
