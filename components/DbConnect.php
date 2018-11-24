@@ -7,10 +7,10 @@ class DbConnect
     public static function getConnection(): array
     {
         return array(
-            'host' => '172.20.0.2:3306',
-            'dbname' => 'app',
-            'user' => 'app',
-            'password' => 'secret',
+            'host' => $_ENV['DB_HOST'],
+            'dbname' =>  $_ENV['DB_NAME'],
+            'user' =>  $_ENV['DB_USER'],
+            'password' =>  $_ENV['DB_PASSWORD'],
         );
     }
 }

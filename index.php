@@ -12,5 +12,8 @@ define('ROOT', dirname(__FILE__));
 
 require ROOT . '/vendor/autoload.php';
 
+$dotenv = new Dotenv\Dotenv(__DIR__);
+$dotenv->load();
+
 $router = new Router();
 $router->run();
