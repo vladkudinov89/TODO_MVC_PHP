@@ -17,7 +17,6 @@
     <thead>
     <tr>
         <th scope="col">#</th>
-        <th scope="col">Task ID</th>
         <th scope="col">Username</th>
         <th scope="col">Email</th>
         <th scope="col">Status</th>
@@ -42,7 +41,6 @@
                 "
         >
             <td><?php echo  $i++;?></td>
-            <td><?php echo  $task['task_id']?></td>
             <td><?php echo $task['username'] ?></td>
             <td><?php echo $task['email'] ?></td>
             <td><?php echo $task['is_complete'] ? "complete" : "not complete";?></td>
