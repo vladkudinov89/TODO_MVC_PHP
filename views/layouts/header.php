@@ -7,6 +7,8 @@
     <meta name="author" content="">
     <title>BeeJee</title>
     <link href="/template/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
     <link href="/template/css/font-awesome.min.css" rel="stylesheet">
     <link href="/template/css/main.css" rel="stylesheet">
 

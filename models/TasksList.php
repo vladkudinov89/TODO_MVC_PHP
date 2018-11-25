@@ -6,25 +6,20 @@ use Components\Db;
 
 class TasksList
 {
-    const SHOW_BY_DEFAULT = 3;
-    const SHOW_PAGINATION = 3;
 
-    public static function getTaskLists($count = self::SHOW_BY_DEFAULT, $page = 1): array
+    public static function getTaskLists(): array
     {
-        $count = intval($count);
-        $page = intval($page);
-
-        $offset = ($page - 1) * self::SHOW_PAGINATION;
         $db = Db::getConnection();
 
         $tasksList = array();
 
-        $result = $db->query('SELECT u.username , u.email , t.task_name , t.task_img, t.is_complete , t.id as task_id
-        from (select * from task_list 
-        order by task_list.id DESC 
-        limit ' . $count . ' offset ' . $offset . '
-        )  as t
-        left join users u
+        $result = $db->query(
+            '
+        SELECT
+        u.username , u.email ,
+        t.task_name , t.task_img, t.is_complete , t.id as task_id
+        FROM task_list as t
+        LEFT JOIN users u
            on u.id = t.user_id'
         );
         if ($result) {
@@ -43,24 +38,13 @@ class TasksList
         return $tasksList;
     }
 
-    public static function getTotalTasks()
+    public static function add($taskName, $taskText, $task_img)
     {
 
         $db = Db::getConnection();
 
-        $result = $db->query("SELECT count(id) as count FROM task_list");
-        $result->setFetchMode(\PDO::FETCH_ASSOC);
-        $row = $result->fetch();
-        return $row['count'];
-    }
-
-    public static function add($taskName, $taskText , $task_img)
-    {
-
-        $db = Db::getConnection();
-
-        $sql = 'INSERT INTO task_list (task_name , task_text , user_id , task_img) '
-            . 'VALUES (:task_name,:task_text , 4 , :task_img)';
+        $sql = 'INSERT INTO task_list(task_name, task_text, user_id, task_img) '
+            . 'VALUES(:task_name,:task_text , 4 , :task_img)';
 
         $result = $db->prepare($sql);
         $result->bindParam(':task_name', $taskName, \PDO::PARAM_STR);
@@ -76,8 +60,8 @@ class TasksList
 
         $sql = 'UPDATE task_list SET is_complete = 1 WHERE id = :taskId';
 
-         $result = $db->prepare($sql);
-         $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
+        $result = $db->prepare($sql);
+        $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
 
         return $result->execute();
     }
@@ -88,8 +72,8 @@ class TasksList
 
         $sql = 'UPDATE task_list SET is_complete = 0 WHERE id = :taskId';
 
-         $result = $db->prepare($sql);
-         $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
+        $result = $db->prepare($sql);
+        $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
 
         return $result->execute();
     }
@@ -110,7 +94,7 @@ class TasksList
     {
         $db = Db::getConnection();
 
-        $sql = 'DELETE FROM app.task_list WHERE id = :taskId';
+        $sql = 'DELETE FROM app . task_list WHERE id = :taskId';
 
         $result = $db->prepare($sql);
         $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
