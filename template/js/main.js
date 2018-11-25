@@ -46,9 +46,6 @@ $(document).ready(function () {
         "columnDefs": [
             {
                 orderable: false, targets: [4,5 , getLength()]
-            },
-            {
-                "orderSequence": [ "desc" ], "targets": [ 0 ]
             }
         ]
     });
