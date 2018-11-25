@@ -15,12 +15,15 @@ class TasksList
 
         $result = $db->query(
             '
-        SELECT
+         SELECT
         u.username , u.email ,
         t.task_name , t.task_img, t.is_complete , t.id as task_id
-        FROM task_list as t
+        FROM
+        task_list as t
         LEFT JOIN users u
-           on u.id = t.user_id'
+           on u.id = t.user_id
+        order by t.id DESC
+        '
         );
         if ($result) {
             $i = 0;
@@ -43,8 +46,10 @@ class TasksList
 
         $db = Db::getConnection();
 
+        $userIDAddTask = !User::isGuest() ? 1 : 4;
+
         $sql = 'INSERT INTO task_list(task_name, task_text, user_id, task_img) '
-            . 'VALUES(:task_name,:task_text , 4 , :task_img)';
+            . 'VALUES(:task_name,:task_text ,' . $userIDAddTask . ' , :task_img)';
 
         $result = $db->prepare($sql);
         $result->bindParam(':task_name', $taskName, \PDO::PARAM_STR);
