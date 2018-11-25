@@ -70,6 +70,6 @@
 
     </tbody>
 </table>
-<?php echo $pagination->get(); ?>
+<?php //echo $pagination->get(); ?>
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>

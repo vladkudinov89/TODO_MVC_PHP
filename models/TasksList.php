@@ -6,15 +6,9 @@ use Components\Db;
 
 class TasksList
 {
-    const SHOW_BY_DEFAULT = 3;
-    const SHOW_PAGINATION = 3;
 
-    public static function getTaskLists($count = self::SHOW_BY_DEFAULT, $page = 1): array
+    public static function getTaskLists(): array
     {
-        $count = intval($count);
-        $page = intval($page);
-
-        $offset = ($page - 1) * self::SHOW_PAGINATION;
         $db = Db::getConnection();
 
         $tasksList = array();
@@ -24,13 +18,9 @@ class TasksList
         SELECT
         u.username , u.email ,
         t.task_name , t.task_img, t.is_complete , t.id as task_id
-        FROM
-        (select * from task_list
-        order by id DESC
-        )  as t
+        FROM task_list as t
         LEFT JOIN users u
            on u.id = t.user_id'
-
         );
         if ($result) {
             $i = 0;

@@ -9,16 +9,16 @@ use Models\User;
 class TaskController
 {
 
-    public function actionIndex($page)
+    public function actionIndex()
     {
-        if (empty($page)) {
-            $page = 1;
-        }
-        $tasks = TasksList::getTaskLists(TasksList::SHOW_BY_DEFAULT, $page);
+//        if (empty($page)) {
+//            $page = 1;
+//        }
+        $tasks = TasksList::getTaskLists();
 
-        $totalTasks = TasksList::getTotalTasks();
+//        $totalTasks = TasksList::getTotalTasks();
 
-        $pagination = new Pagination($totalTasks, $page, TasksList::SHOW_PAGINATION, 'page-');
+//        $pagination = new Pagination($totalTasks, $page, TasksList::SHOW_PAGINATION, 'page-');
 
         require_once(ROOT . '/views/task/index.php');
         return true;

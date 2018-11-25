@@ -15,7 +15,7 @@ class RoutePaths
             'edit/([0-9]+)' => 'task/edit/$1',
             'rollback/([0-9]+)' => 'task/rollback/$1',
             'delete/([0-9]+)' => 'task/delete/$1',
-            'page-([0-9]+)' => 'task/index/$1',
+//            'page-([0-9]+)' => 'task/index/$1',
             '' => 'task/index/',
         );
     }
