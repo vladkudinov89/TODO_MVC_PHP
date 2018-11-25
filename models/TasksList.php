@@ -38,17 +38,6 @@ class TasksList
         return $tasksList;
     }
 
-    public static function getTotalTasks()
-    {
-
-        $db = Db::getConnection();
-
-        $result = $db->query("SELECT count(id) as count FROM task_list");
-        $result->setFetchMode(\PDO::FETCH_ASSOC);
-        $row = $result->fetch();
-        return $row['count'];
-    }
-
     public static function add($taskName, $taskText, $task_img)
     {
 

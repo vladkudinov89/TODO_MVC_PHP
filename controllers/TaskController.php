@@ -11,14 +11,7 @@ class TaskController
 
     public function actionIndex()
     {
-//        if (empty($page)) {
-//            $page = 1;
-//        }
         $tasks = TasksList::getTaskLists();
-
-//        $totalTasks = TasksList::getTotalTasks();
-
-//        $pagination = new Pagination($totalTasks, $page, TasksList::SHOW_PAGINATION, 'page-');
 
         require_once(ROOT . '/views/task/index.php');
         return true;
