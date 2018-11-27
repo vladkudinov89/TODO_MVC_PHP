@@ -16,13 +16,23 @@ $(document).ready(function () {
         });
     });
 
-    $('.btn-edit').on('click', function (e) {
-        e.preventDefault();
-        var taskID = $(this).parent().parent().attr('data-task-id');
-        $.post("/edit/" + taskID, function () {
-            // location.reload();
-        });
-    });
+    // $('.btn-edit').on('click', function (e) {
+    //     e.preventDefault();
+    //     var taskID = $(this).parent().parent().attr('data-task-id');
+    //     $.post("/edit/" + taskID, function () {
+    //         // location.reload();
+    //     });
+    // });
+    //
+    // $('#saveTask').on('click', function (e) {
+    //
+    //     e.preventDefault();
+    //
+    //     var taskID = $(this).attr('data-task-id');
+    //     $.post("/edit/" + taskID, function () {
+    //         // location.reload();
+    //     });
+    // });
 
     $('.btn-delete').on('click', function (e) {
         e.preventDefault();

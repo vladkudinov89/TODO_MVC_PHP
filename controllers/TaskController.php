@@ -88,14 +88,69 @@ class TaskController
         return false;
     }
 
-    public
-    function actionEdit($taskId)
+//    public
+//    function actionStore($taskId)
+//    {
+//
+//        $taskStore = TasksList::getCurrentTask($taskId);
+////        require_once(ROOT . '/views/task/edit.php');
+////        return true;
+//        $task_name = '';
+//        $task_text = '';
+//
+//        $result = false;
+//
+//        if(isset($_POST['submit'])) {
+//            $errors = false;
+//
+//            if($errors = false)
+//            {
+//                $result = TasksList::taskEdit($taskId , $task_name , $task_text);
+//            }
+//            require_once(ROOT . '/views/task/edit.php');
+//            return true;
+//        }
+//    }
+
+    public function actionEdit($taskId)
     {
-        $editTask = TasksList::taskEdit($taskId);
-        if ($editTask) {
-            return true;
+        $taskStore = TasksList::getCurrentTask($taskId);
+
+        $task_name = $taskStore['task_name'];
+        $task_text = $taskStore['task_text'];
+        $task_img = $taskStore['task_img'];
+
+        $result = false;
+
+        if(isset($_POST['submit'])) {
+
+            $task_name = $_POST['taskname'];
+            $task_text = $_POST['tasktext'];
+            if (isset($_FILES['taskphoto'])) {
+
+                $image = $_FILES['taskphoto'];
+
+                $imageType = $image['type'];
+
+                if ($imageType == 'image/jpg' || $imageType == 'image/jpeg' || $imageType == 'image/png') {
+
+                    $saveto = 'upload/' . basename($image["name"]);
+                    move_uploaded_file($image['tmp_name'], $saveto);
+                    $task_img = $saveto;
+                }
+            }
+
+            $errors = false;
+
+            if($errors == false)
+            {
+                $result = TasksList::taskEdit($taskId , $task_name , $task_text , $task_img);
+            }
+
         }
-        return false;
+        require_once(ROOT . '/views/task/edit.php');
+        return true;
+
     }
 
     public
