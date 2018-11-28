@@ -59,7 +59,7 @@
                     <?php endif; ?>
 
                     <?php if (!$task['is_complete']) : ?>
-                        <button class="btn btn-sm btn-warning btn-edit">Edit</button>
+                        <a href="task/edit/<?php echo $task['task_id']; ?>" class="btn btn-sm btn-warning btn-edit">Edit</a>
                     <?php endif; ?>
 
                     <button class="btn btn-sm btn-danger btn-delete">Delete</button>

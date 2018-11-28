@@ -88,14 +88,55 @@ class TaskController
         return false;
     }
 
-    public
-    function actionEdit($taskId)
+//    public
+//    function actionStore($taskId)
+//    {
+//
+//        $taskStore = TasksList::getCurrentTask($taskId);
+////        require_once(ROOT . '/views/task/edit.php');
+////        return true;
+//        $task_name = '';
+//        $task_text = '';
+//
+//        $result = false;
+//
+//        if(isset($_POST['submit'])) {
+//            $errors = false;
+//
+//            if($errors = false)
+//            {
+//                $result = TasksList::taskEdit($taskId , $task_name , $task_text);
+//            }
+//            require_once(ROOT . '/views/task/edit.php');
+//            return true;
+//        }
+//    }
+
+    public function actionEdit($taskId)
     {
-        $editTask = TasksList::taskEdit($taskId);
-        if ($editTask) {
-            return true;
+        $taskStore = TasksList::getCurrentTask($taskId);
+
+        $task_name = $taskStore['task_name'];
+        $task_text = $taskStore['task_text'];
+
+        $result = false;
+
+        if(isset($_POST['submit'])) {
+
+            $task_name = $_POST['taskname'];
+            $task_text = $_POST['tasktext'];
+
+            $errors = false;
+
+            if($errors == false)
+            {
+                $result = TasksList::taskEdit($taskId , $task_name , $task_text);
+            }
+
         }
-        return false;
+        require_once(ROOT . '/views/task/edit.php');
+        return true;
+
     }
 
     public

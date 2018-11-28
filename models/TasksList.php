@@ -83,16 +83,18 @@ class TasksList
         return $result->execute();
     }
 
-    public static function taskEdit($taskId)
+    public static function taskEdit($taskId , $task_name , $task_text)
     {
         $db = Db::getConnection();
 
-//        $sql = 'UPDATE task_list SET is_complete = 0 WHERE id = :taskId';
-//
-//         $result = $db->prepare($sql);
-//         $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
-//
-//        return $result->execute();
+        $sql = "UPDATE task_list SET task_name=:task_name , task_text=:task_text WHERE id=:taskId";
+        $result = $db->prepare($sql);
+        $result->bindParam(':task_name', $task_name, \PDO::PARAM_STR);
+        $result->bindParam(':task_text', $task_text, \PDO::PARAM_STR);
+        $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
+
+        return $result->execute();
+
     }
 
     public static function taskDelete($taskId)
@@ -105,5 +107,22 @@ class TasksList
         $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
 
         return $result->execute();
+    }
+
+    public static function getCurrentTask($taskID)
+    {
+        $db = Db::getConnection();
+
+        $taskStore = array();
+
+        $result = $db->query('SELECT * FROM app.task_list WHERE id = ' . $taskID);
+        if ($result) {
+            while ($row = $result->fetch()) {
+                $taskStore['id'] = $row['id'];
+                $taskStore['task_name'] = $row['task_name'];
+                $taskStore['task_text'] = $row['task_text'];
+            }
+        }
+        return $taskStore;
     }
 }
