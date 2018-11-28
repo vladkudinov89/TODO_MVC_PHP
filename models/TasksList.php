@@ -83,14 +83,20 @@ class TasksList
         return $result->execute();
     }
 
-    public static function taskEdit($taskId , $task_name , $task_text)
+    public static function taskEdit($taskId, $task_name, $task_text, $task_img)
     {
         $db = Db::getConnection();
 
-        $sql = "UPDATE task_list SET task_name=:task_name , task_text=:task_text WHERE id=:taskId";
+        $sql = "UPDATE task_list
+        SET 
+        task_name=:task_name , 
+        task_text=:task_text ,  
+        task_img = :task_img
+        WHERE id=:taskId";
         $result = $db->prepare($sql);
         $result->bindParam(':task_name', $task_name, \PDO::PARAM_STR);
         $result->bindParam(':task_text', $task_text, \PDO::PARAM_STR);
+        $result->bindParam(':task_img', $task_img, \PDO::PARAM_STR);
         $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
 
         return $result->execute();
@@ -121,6 +127,7 @@ class TasksList
                 $taskStore['id'] = $row['id'];
                 $taskStore['task_name'] = $row['task_name'];
                 $taskStore['task_text'] = $row['task_text'];
+                $taskStore['task_img'] = $row['task_img'];
             }
         }
         return $taskStore;

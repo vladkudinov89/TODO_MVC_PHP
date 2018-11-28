@@ -118,6 +118,7 @@ class TaskController
 
         $task_name = $taskStore['task_name'];
         $task_text = $taskStore['task_text'];
+        $task_img = $taskStore['task_img'];
 
         $result = false;
 
@@ -125,12 +126,25 @@ class TaskController
 
             $task_name = $_POST['taskname'];
             $task_text = $_POST['tasktext'];
+            if (isset($_FILES['taskphoto'])) {
+
+                $image = $_FILES['taskphoto'];
+
+                $imageType = $image['type'];
+
+                if ($imageType == 'image/jpg' || $imageType == 'image/jpeg' || $imageType == 'image/png') {
+
+                    $saveto = 'upload/' . basename($image["name"]);
+                    move_uploaded_file($image['tmp_name'], $saveto);
+                    $task_img = $saveto;
+                }
+            }
 
             $errors = false;
 
             if($errors == false)
             {
-                $result = TasksList::taskEdit($taskId , $task_name , $task_text);
+                $result = TasksList::taskEdit($taskId , $task_name , $task_text , $task_img);
             }
 
         }
