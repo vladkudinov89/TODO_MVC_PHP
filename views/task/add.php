@@ -10,10 +10,10 @@
                 <textarea name="tasktext" id="tasktext" cols="40" rows="10" placeholder="Task Text"><?php echo $taskText; ?></textarea>
             </div>
             <div class="form-group">
-                <input type="file" name="taskphoto" id="taskphoto">
+                <input type="file" name="addTaskPhoto" id="taskphoto">
             </div>
             <div class="form-group">
-                <input type="submit" name="submit" class="btn btn-success" value="Add Task"/>
+                <input type="submit" name="addTask" class="btn btn-success" value="Add Task"/>
             </div>
         </form>
     </div>

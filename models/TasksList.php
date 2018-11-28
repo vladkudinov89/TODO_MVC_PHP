@@ -100,7 +100,6 @@ class TasksList
         $result->bindParam(':taskId', $taskId, \PDO::PARAM_INT);
 
         return $result->execute();
-
     }
 
     public static function taskDelete($taskId)
