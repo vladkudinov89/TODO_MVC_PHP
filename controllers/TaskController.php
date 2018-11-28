@@ -2,12 +2,18 @@
 
 namespace Controllers;
 
-use Components\Pagination;
 use Models\TasksList;
-use Models\User;
+use Services\PhotoService;
 
 class TaskController
 {
+    private $photoService;
+
+    public function __construct()
+    {
+        $this->photoService = new PhotoService();
+    }
+
 
     public function actionIndex()
     {
@@ -21,14 +27,13 @@ class TaskController
     {
         $taskName = '';
         $taskText = '';
-
         $imageRoute = "upload/default.png";
 
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['addTask'])) {
 
-            if (isset($_FILES['taskphoto'])) {
+            if (isset($_FILES['addTaskPhoto'])) {
 
-                $image = $_FILES['taskphoto'];
+                $image = $_FILES['addTaskPhoto'];
 
                 $imageType = $image['type'];
 
@@ -88,30 +93,6 @@ class TaskController
         return false;
     }
 
-//    public
-//    function actionStore($taskId)
-//    {
-//
-//        $taskStore = TasksList::getCurrentTask($taskId);
-////        require_once(ROOT . '/views/task/edit.php');
-////        return true;
-//        $task_name = '';
-//        $task_text = '';
-//
-//        $result = false;
-//
-//        if(isset($_POST['submit'])) {
-//            $errors = false;
-//
-//            if($errors = false)
-//            {
-//                $result = TasksList::taskEdit($taskId , $task_name , $task_text);
-//            }
-//            require_once(ROOT . '/views/task/edit.php');
-//            return true;
-//        }
-//    }
-
     public function actionEdit($taskId)
     {
         $taskStore = TasksList::getCurrentTask($taskId);
@@ -122,29 +103,37 @@ class TaskController
 
         $result = false;
 
-        if(isset($_POST['submit'])) {
+        if (isset($_POST['editTask'])) {
 
-            $task_name = $_POST['taskname'];
-            $task_text = $_POST['tasktext'];
-            if (isset($_FILES['taskphoto'])) {
+            $task_name = trim(filter_var($_POST['taskname'], FILTER_SANITIZE_STRING));
+            $task_text = trim(filter_var($_POST['tasktext'], FILTER_SANITIZE_STRING));
 
-                $image = $_FILES['taskphoto'];
+            $task_image = $_FILES['editTaskPhoto'];
 
-                $imageType = $image['type'];
+            if (isset($task_image)) {
 
-                if ($imageType == 'image/jpg' || $imageType == 'image/jpeg' || $imageType == 'image/png') {
+                $imageType = $task_image['type'];
 
-                    $saveto = 'upload/' . basename($image["name"]);
-                    move_uploaded_file($image['tmp_name'], $saveto);
+                if ($imageType == 'image/jpg' || $imageType == 'image/jpeg' || $imageType == 'image/png')
+                {
+                    $saveto = 'upload/' . basename($task_image["name"]);
+                    move_uploaded_file($task_image['tmp_name'], $saveto);
                     $task_img = $saveto;
                 }
             }
 
             $errors = false;
 
-            if($errors == false)
-            {
-                $result = TasksList::taskEdit($taskId , $task_name , $task_text , $task_img);
+            if (empty($task_name)) {
+                $errors[] = 'Name task is empty';
+            }
+
+            if (empty($task_text)) {
+                $errors[] = 'Text task is empty';
+            }
+
+            if ($errors == false) {
+                $result = TasksList::taskEdit($taskId, $task_name, $task_text, $task_img);
             }
 
         }

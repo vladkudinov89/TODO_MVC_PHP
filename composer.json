@@ -13,7 +13,8 @@
     "psr-4": {
       "Components\\": "components",
       "Models\\": "models",
-      "Controllers\\": "controllers"
+      "Controllers\\": "controllers",
+      "Services\\": "services"
     }
   }
 }

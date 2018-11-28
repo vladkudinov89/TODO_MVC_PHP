@@ -23,13 +23,12 @@
                 <textarea name="tasktext" id="tasktext" cols="40" rows="10"
                           placeholder="Task Text"><?php echo $task_text; ?></textarea>
             </div>
-
-                        <div class="form-group">
-                            <img  src="  <?php echo'/'.$task_img; ?>" alt="">
-                            <input type="file" name="taskphoto" id="taskphoto">
-                        </div>
             <div class="form-group">
-                <input type="submit"  name="submit"
+                <img style="width: 240px;" src="  <?php echo '/' . $task_img; ?>" alt="">
+                <input type="file" name="editTaskPhoto" id="taskphoto">
+            </div>
+            <div class="form-group">
+                <input type="submit" name="editTask"
                        class="btn btn-success" value="Save Task"/>
             </div>
         </form>
