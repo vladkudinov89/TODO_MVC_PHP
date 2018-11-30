@@ -1,6 +1,6 @@
 <!-- Button trigger modal -->
 <button type="button" id="preview_task_preview" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-    Launch demo modal
+    Task Preview
 </button>
 
 <!-- Modal -->
@@ -13,13 +13,15 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <p>Task text:</p>
+                    <p class="text-muted">Task Name</p>
                     <span id="task_name"></span>
                 </div>
                 <div class="form-group">
+                    <p class="text-muted">Task Text</p>
                     <span id="task_text"></span>
                 </div>
                 <div class="form-group">
+                    <p class="text-muted">Task Image</p>
                     <img id="task_img" src="" width="320px">
                 </div>
             </div>
