@@ -70,6 +70,16 @@ $(document).ready(function () {
         }
     }
 
+    $('#preview_task_preview').prop('disabled', true);
+
+    $('#taskname').change(function () {
+        if (!$(this).val()) {
+            $('#preview_task_preview').prop('disabled', true);
+        } else {
+            $('#preview_task_preview').prop('disabled', false);
+        }
+    });
+
     $('#preview_task_preview').click(function (e) {
         e.preventDefault();
 
@@ -78,6 +88,9 @@ $(document).ready(function () {
 
         $('#task_name').html(task_name);
         $('#task_text').html(task_text);
+        if($('#taskphoto')[0]){
+            $('#task_img').attr("src","/upload/default.png");
+        }
         readURL($('#taskphoto')[0]);
 
     });
