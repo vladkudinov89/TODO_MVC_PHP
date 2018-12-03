@@ -6,9 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>BeeJee</title>
-    <link href="/template/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/template/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/template/css/main.css" rel="stylesheet">
+    <link href="/public/build/css/app.css" rel="stylesheet">
 
 </head><!--/head-->
 
