@@ -4,10 +4,10 @@
         <h2>Add Task</h2>
         <form method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <input type="text" name="taskname" id="taskname" placeholder="Task Name" value="<?php echo $taskName; ?>"/>
+                <input type="text" name="taskname" id="taskname" placeholder="Task Name"/>
             </div>
             <div class="form-group">
-                <textarea name="tasktext" id="tasktext" cols="40" rows="10" placeholder="Task Text"><?php echo $taskText; ?></textarea>
+                <textarea name="tasktext" id="tasktext" cols="40" rows="10" placeholder="Task Text"></textarea>
             </div>
             <div class="form-group">
                 <input type="file" name="addTaskPhoto" id="taskphoto">
