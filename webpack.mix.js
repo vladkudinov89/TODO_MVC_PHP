@@ -20,4 +20,5 @@ mix
     .setResourceRoot('../../build/')
     .js('resources/js/app.js', 'js')
     .sass('resources/css/app.scss', 'css')
-    .version();
+    .version()
+    .copyDirectory('resources/images', 'public/build/images/media');
