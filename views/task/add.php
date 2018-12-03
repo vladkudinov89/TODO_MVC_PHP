@@ -13,7 +13,14 @@
                 <input type="file" name="addTaskPhoto" id="taskphoto">
             </div>
             <div class="form-group">
-                <input type="submit" name="addTask" class="btn btn-success" value="Add Task"/>
+                <p>
+                    <!-- Button trigger modal -->
+                    <button type="button" id="preview_task_preview" class="btn btn-primary" data-toggle="modal"
+                            data-target="#myModal">
+                        Task Preview
+                    </button>
+                    <input type="submit" name="addTask" class="btn btn-success" value="Add Task"/>
+                </p>
             </div>
         </form>
     </div>
