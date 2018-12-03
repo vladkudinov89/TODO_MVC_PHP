@@ -3,6 +3,7 @@
 @import '~font-awesome/css/font-awesome.min.css';
 
 @import 'login';
+@import 'preview';
 @import 'footer';
 
 /*************************
@@ -19,9 +20,6 @@ body {
   /*font-weight:400px;*/
   //margin-bottom: 60px;
 }
-//body > .container{
-//  padding-top: 60px;
-//}
 
 ul li {
   list-style: none;
@@ -84,3 +82,7 @@ a#scrollUp {
 {
   margin-right: 0;
 }
+
+//.dataTables_filter > input{
+//
+//}
