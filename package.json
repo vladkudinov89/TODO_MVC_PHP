@@ -1,0 +1,24 @@
+{
+  "name": "TODO-app",
+  "version": "1.0.0",
+  "description": "TODO-APP",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "keywords": [],
+  "author": "Vlad Kudinov",
+  "homepage": "https://github.com/vladkudinov89/TODO_MVC_PHP",
+  "devDependencies": {
+    "laravel-mix": "^2.1.14"
+  },
+  "dependencies": {
+    "bootstrap": "3.3.7",
+    "jquery": "^3.3.1",
+    "datatables-all": "latest",
+    "font-awesome": "^4.7.0"
+  }
+}

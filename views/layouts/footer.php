@@ -7,11 +7,5 @@
 
 </div>
 
-<script src="/template/js/jquery.min.js"></script>
-<script src="/template/js/dataTables.min.js"></script>
-<script src="/template/js/dataTablesBootstrap.min.js"></script>
-
-<script src="/template/js/bootstrap.min.js"></script>
-
-<script src="/template/js/main.js"></script>
+<script src="/public/build/js/app.js"></script>
 
