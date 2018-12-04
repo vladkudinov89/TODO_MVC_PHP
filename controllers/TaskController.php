@@ -25,28 +25,12 @@ class TaskController
 
     public function actionAdd()
     {
-        $taskName = '';
-        $taskText = '';
-        $imageRoute = "upload/default.png";
-
         if (isset($_POST['addTask'])) {
 
-            if (isset($_FILES['addTaskPhoto'])) {
+            $imageRoute = $this->photoService::addImage($_FILES['addTaskPhoto']);
 
-                $image = $_FILES['addTaskPhoto'];
-
-                $imageType = $image['type'];
-
-                if ($imageType == 'image/jpg' || $imageType == 'image/jpeg' || $imageType == 'image/png') {
-
-                    $saveto = 'upload/' . basename($image["name"]);
-                    move_uploaded_file($image['tmp_name'], $saveto);
-                    $imageRoute = $saveto;
-                }
-            }
-
-            $taskName = $_POST['taskname'];
-            $taskText = $_POST['tasktext'];
+            $taskName =trim(filter_var($_POST['taskname'], FILTER_SANITIZE_STRING));
+            $taskText =trim(filter_var($_POST['tasktext'], FILTER_SANITIZE_STRING));
 
             $errors = false;
 
