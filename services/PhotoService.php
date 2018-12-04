@@ -3,12 +3,9 @@ namespace Services;
 
 class PhotoService
 {
-    public static function addImage($image)
+    public static function addImage($image): string
     {
-        print_r($image);
         if (isset($image)) {
-
-//            $image = $_FILES['taskphoto'];
 
             $imageType = $image['type'];
 
@@ -18,10 +15,9 @@ class PhotoService
                 move_uploaded_file($image['tmp_name'], $saveto);
                 return $saveto;
             }
-        } else {
-            return 'upload/default.png';
         }
 
+        return 'upload/default.png';
     }
 
     public static function editPhoto($image)
