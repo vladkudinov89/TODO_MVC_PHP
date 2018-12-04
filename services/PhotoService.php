@@ -20,7 +20,7 @@ class PhotoService
         return 'upload/default.png';
     }
 
-    public static function editPhoto($image)
+    public static function editPhoto($old_image,$image): string
     {
         if (isset($image)) {
 
@@ -33,6 +33,7 @@ class PhotoService
               return $saveto;
             }
         }
+        return $old_image;
     }
 
 }

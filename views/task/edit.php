@@ -1,17 +1,5 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
 
-<?php if ($result): ?>
-    <p class="alert alert-success">Данные отредактированы!</p>
-<?php else: ?>
-    <?php if (isset($errors) && is_array($errors)): ?>
-        <ul>
-            <?php foreach ($errors as $error): ?>
-                <li> - <?php echo $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    <?php endif; ?>
-<?php endif; ?>
-
     <div class="addTask-form">
         <h2>Edit Task</h2>
         <form method="post" enctype="multipart/form-data">

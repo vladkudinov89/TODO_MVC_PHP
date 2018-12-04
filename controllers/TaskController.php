@@ -29,8 +29,8 @@ class TaskController
 
             $imageRoute = $this->photoService::addImage($_FILES['addTaskPhoto']);
 
-            $taskName =trim(filter_var($_POST['taskname'], FILTER_SANITIZE_STRING));
-            $taskText =trim(filter_var($_POST['tasktext'], FILTER_SANITIZE_STRING));
+            $taskName = trim(filter_var($_POST['taskname'], FILTER_SANITIZE_STRING));
+            $taskText = trim(filter_var($_POST['tasktext'], FILTER_SANITIZE_STRING));
 
             $errors = false;
 
@@ -48,7 +48,7 @@ class TaskController
 
                 if ($result) {
                     $messages[] = "Task has been added!";
-                    unset($taskName, $taskText , $_FILES['addTaskPhoto']);
+                    unset($taskName, $taskText, $_FILES['addTaskPhoto']);
                 }
 
             }
@@ -95,17 +95,7 @@ class TaskController
 
             $task_image = $_FILES['editTaskPhoto'];
 
-            if (isset($task_image)) {
-
-                $imageType = $task_image['type'];
-
-                if ($imageType == 'image/jpg' || $imageType == 'image/jpeg' || $imageType == 'image/png')
-                {
-                    $saveto = 'upload/' . basename($task_image["name"]);
-                    move_uploaded_file($task_image['tmp_name'], $saveto);
-                    $task_img = $saveto;
-                }
-            }
+            $task_img = $this->photoService::editPhoto($task_img, $task_image);
 
             $errors = false;
 
@@ -119,6 +109,10 @@ class TaskController
 
             if ($errors == false) {
                 $result = TasksList::taskEdit($taskId, $task_name, $task_text, $task_img);
+            }
+
+            if($result){
+                $messages[] = "Task is success edit!";
             }
 
         }
