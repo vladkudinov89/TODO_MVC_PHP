@@ -95,7 +95,7 @@ class TaskController
 
             $task_image = $_FILES['editTaskPhoto'];
 
-            $task_img = $this->photoService::editPhoto($task_img, $task_image);
+            $task_img = $this->photoService->editPhoto($task_img, $task_image);
 
             $errors = false;
 
