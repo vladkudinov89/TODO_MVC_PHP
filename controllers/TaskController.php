@@ -27,7 +27,7 @@ class TaskController
     {
         if (isset($_POST['addTask'])) {
 
-            $imageRoute = $this->photoService::addImage($_FILES['addTaskPhoto']);
+            $imageRoute = $this->photoService->addImage($_FILES['addTaskPhoto']);
 
             $taskName = trim(filter_var($_POST['taskname'], FILTER_SANITIZE_STRING));
             $taskText = trim(filter_var($_POST['tasktext'], FILTER_SANITIZE_STRING));
