@@ -47,15 +47,35 @@ class PhotoService implements PhotoServiceInterface
     }
 
 
-    public static function editPhoto($old_image, $image): string
+    public function editPhoto($old_image, $image): string
     {
         if (isset($image)) {
 
             $imageType = $image['type'];
 
             if ($imageType == 'image/jpg' || $imageType == 'image/jpeg' || $imageType == 'image/png') {
-                $saveto = self::UPLOAD_PATH . basename($image["name"]);
-                move_uploaded_file($image['tmp_name'], $saveto);
+
+                list($width, $height) = getimagesize($image['tmp_name']);
+
+                if ($width >= self::WIDTH || $height >= self::HEIGHT) {
+
+                    $saveto = new ResizePhoto(
+                        $image,
+                        self::UPLOAD_PATH,
+                        $imageType,
+                        $width,
+                        $height,
+                        self::WIDTH,
+                        self::HEIGHT
+                    );
+
+                    return $saveto->imageResize();
+
+                } else {
+                    $saveto = self::UPLOAD_PATH . basename($image["name"]);
+                    move_uploaded_file($image['tmp_name'], $saveto);
+                }
+
                 return $saveto;
             }
         }
