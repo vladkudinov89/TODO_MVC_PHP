@@ -1,8 +1,7 @@
 <?php
-
 namespace Services;
 
-use Services\ResizePhoto\ResizePhoto;
+use Services\ImageAction\ImageAction;
 
 class PhotoService implements PhotoServiceInterface
 {
@@ -14,33 +13,14 @@ class PhotoService implements PhotoServiceInterface
     {
         if (isset($image)) {
 
-            $imageType = $image['type'];
+            $saveto = new ImageAction(
+                $image,
+                self::UPLOAD_PATH,
+                self::WIDTH,
+                self::HEIGHT
+            );
 
-            if ($imageType == 'image/jpg' || $imageType == 'image/jpeg' || $imageType == 'image/png') {
-
-                list($width, $height) = getimagesize($image['tmp_name']);
-
-                if ($width >= self::WIDTH || $height >= self::HEIGHT) {
-
-                    $saveto = new ResizePhoto(
-                        $image,
-                        self::UPLOAD_PATH,
-                        $imageType,
-                        $width,
-                        $height,
-                        self::WIDTH,
-                        self::HEIGHT
-                    );
-
-                    return $saveto->imageResize();
-
-                } else {
-                    $saveto = self::UPLOAD_PATH . basename($image["name"]);
-                    move_uploaded_file($image['tmp_name'], $saveto);
-                }
-
-                return $saveto;
-            }
+            return $saveto->imageAction();
         }
 
         return self::UPLOAD_PATH . 'default.png';
@@ -51,33 +31,14 @@ class PhotoService implements PhotoServiceInterface
     {
         if (isset($image)) {
 
-            $imageType = $image['type'];
+            $saveto = new ImageAction(
+                $image,
+                self::UPLOAD_PATH,
+                self::WIDTH,
+                self::HEIGHT
+            );
 
-            if ($imageType == 'image/jpg' || $imageType == 'image/jpeg' || $imageType == 'image/png') {
-
-                list($width, $height) = getimagesize($image['tmp_name']);
-
-                if ($width >= self::WIDTH || $height >= self::HEIGHT) {
-
-                    $saveto = new ResizePhoto(
-                        $image,
-                        self::UPLOAD_PATH,
-                        $imageType,
-                        $width,
-                        $height,
-                        self::WIDTH,
-                        self::HEIGHT
-                    );
-
-                    return $saveto->imageResize();
-
-                } else {
-                    $saveto = self::UPLOAD_PATH . basename($image["name"]);
-                    move_uploaded_file($image['tmp_name'], $saveto);
-                }
-
-                return $saveto;
-            }
+            return $saveto->imageAction();
         }
         return $old_image;
     }
