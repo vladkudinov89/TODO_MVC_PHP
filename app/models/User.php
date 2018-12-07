@@ -1,8 +1,8 @@
 <?php
 
-namespace Models;
+namespace App\Models;
 
-use Components\Db;
+use App\Components\Db;
 use PDO;
 
 class User

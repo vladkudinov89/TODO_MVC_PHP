@@ -1,7 +1,7 @@
 <?php
-namespace Services;
+namespace App\Services;
 
-use Services\ImageAction\ImageAction;
+use App\Services\ImageAction\ImageAction;
 
 class PhotoService implements PhotoServiceInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Components;
+namespace App\Components;
 
 class Router
 {
@@ -32,7 +32,7 @@ class Router
 
                 $segments = explode('/', $internalRoute);
 
-                $controllerName = 'Controllers\\' . ucfirst(array_shift($segments) . 'Controller');
+                $controllerName = 'App\\Controllers\\' . ucfirst(array_shift($segments) . 'Controller');
 
                 $actionName = 'action' . ucfirst(array_shift($segments));
 

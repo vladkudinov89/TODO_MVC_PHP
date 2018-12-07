@@ -4,7 +4,7 @@
     <div class="pull-left">
         <a href="task/add" class="btn btn-success btn-md">Add Task</a>
     </div>
-    <?php if (!\Models\User::isGuest()) : ?>
+    <?php if (!App\Models\User::isGuest()) : ?>
     <div class="pull-right alert alert-success" role="alert"
     ">
     Hello,Admin
@@ -25,7 +25,7 @@
             <th scope="col">Task name</th>
             <th scope="col">Image</th>
 
-            <?php if (!\Models\User::isGuest()): ?>
+            <?php if (!App\Models\User::isGuest()): ?>
                 <th scope="col">Action's Task</th>
             <?php endif; ?>
         </tr>
@@ -50,7 +50,7 @@
                 <td><img style="width:220px; height: 120px;" src="<?php echo $task['task_img'] ?>" alt=""></td>
 
 
-                <?php if (!\Models\User::isGuest()): ?>
+                <?php if (!App\Models\User::isGuest()): ?>
                     <td>
                         <?php if (!$task['is_complete']) : ?>
                             <button class="btn btn-sm btn-success btn-complete">Complete</button>

@@ -1,9 +1,9 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
-use Models\TasksList;
-use Services\PhotoService;
+use App\Models\TasksList;
+use App\Services\PhotoService;
 
 class TaskController
 {
