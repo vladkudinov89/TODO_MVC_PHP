@@ -1,5 +1,5 @@
 <?php
-namespace Services\ResizePhoto;
+namespace App\Services\ResizePhoto;
 
 class ResizePhoto implements ResizePhotoInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\ResizePhoto;
+namespace App\Services\ResizePhoto;
 
 interface ResizePhotoInterface
 {

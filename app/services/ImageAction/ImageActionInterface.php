@@ -1,5 +1,5 @@
 <?php
-namespace Services\ImageAction;
+namespace App\Services\ImageAction;
 
 
 interface ImageActionInterface

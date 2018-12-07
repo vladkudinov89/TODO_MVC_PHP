@@ -1,7 +1,7 @@
 <?php
-namespace Services\ImageAction;
+namespace App\Services\ImageAction;
 
-use Services\ResizePhoto\ResizePhoto;
+use App\Services\ResizePhoto\ResizePhoto;
 
 class ImageAction implements ImageActionInterface
 {
