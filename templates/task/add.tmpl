@@ -1,13 +1,16 @@
-<?php include ROOT . '/views/layouts/header.php'; ?>
+{% extends basesTmpl %}
+
+{% block content %}
 
     <div class="addTask-form">
         <h2>Add Task</h2>
         <form method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <input type="text" name="taskname" id="taskname" placeholder="Task Name"/>
+                <input type="text" name="taskname" id="taskname" value="{{ taskName }}" placeholder="Task Name"/>
             </div>
             <div class="form-group">
-                <textarea name="tasktext" id="tasktext" cols="40" rows="10" placeholder="Task Text"></textarea>
+                <textarea name="tasktext" id="tasktext" cols="40" rows="10"
+                          placeholder="Task Text">{{ taskText }}</textarea>
             </div>
             <div class="form-group">
                 <input type="file" name="addTaskPhoto" id="taskphoto">
@@ -25,6 +28,6 @@
         </form>
     </div>
 
-<?php include ROOT . '/views/task/preview.php'; ?>
+    {% include "task/preview.tmpl" %}
 
-<?php include ROOT . '/views/layouts/footer.php'; ?>
+{% endblock %}
