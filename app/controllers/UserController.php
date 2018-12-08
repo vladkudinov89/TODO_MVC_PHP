@@ -3,9 +3,18 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Views\MainView;
 
 class UserController
 {
+    protected $view;
+    protected $content;
+
+    public function __construct()
+    {
+        $this->view = new MainView();
+    }
+
     public function actionLogin()
     {
         $email = '';
@@ -13,23 +22,16 @@ class UserController
 
         if (isset($_POST['submit'])) {
 
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+            $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
+            $password = trim(filter_var($_POST['password'], FILTER_SANITIZE_STRING));
 
             $errors = false;
-
-            // Валидация полей
-//            if (!User::checkEmail($email)) {
-//                $errors[] = 'Неправильный email';
-//            }
-//            if (!User::checkPassword($password)) {
-//                $errors[] = 'Пароль не должен быть короче 6-ти символов';
-//            }
 
             $userId = User::checkUserData($email, $password);
 
             if ($userId == false) {
                 $errors[] = 'Направильные данные для входа на сайт';
+                $this->content['errors'] = $errors;
             } else {
                 User::auth($userId);
 
@@ -37,9 +39,10 @@ class UserController
             }
         }
 
-        require_once(ROOT . '/views/user/login.php');
-
-        return true;
+        $this->content['email'] = $email;
+        $this->content['password'] = $password;
+        $this->content['content'] = "user/login.tmpl";
+        $this->view->generate($this->content);
     }
 
     public function actionLogout()

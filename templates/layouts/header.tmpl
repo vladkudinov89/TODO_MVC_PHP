@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>BeeJee</title>
+    <link href="/public/build/css/app.css" rel="stylesheet">
+
+</head>
+
+<body>
+<div class="container">
+    <header id="header"><!--header-->
+
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">BeeJee</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if  isGuest == true %}
+                    <li><a href="/user/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <!--                        <li><a href="/user/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
+                    {% else %}
+                    <li><a href="/user/logout/"><i class="fa fa-unlock"></i> Logout</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+{% include 'layouts/flash.tmpl' %}

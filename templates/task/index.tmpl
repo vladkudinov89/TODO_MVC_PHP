@@ -1,0 +1,70 @@
+{% extends basesTmpl %}
+
+{% block content %}
+
+    <div class="form-group">
+        <div class="pull-left">
+            <a href="task/add" class="btn btn-success btn-md">Add Task</a>
+        </div>
+        {% if  isGuest == false %}
+            <div class="pull-right alert alert-success" role="alert">
+                Hello,Admin
+            </div>
+        {% endif %}
+        <div class="clearfix"></div>
+    </div>
+
+    <h2 class="text-center">Tasks Table</h2>
+    <div class="table-responsive">
+    <table class="table" id="task-table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Status</th>
+            <th scope="col">Task name</th>
+            <th scope="col">Image</th>
+
+            {% if  isGuest == false %}
+                <th scope="col">Action's Task</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for task in tasks %}
+            <tr
+                    data-task-id="{{ task['task_id'] }}"
+                    class="{{ task['is_complete'] ? "not-complete" : "" }}">
+                <td>{{ loop.index }}</td>
+                <td>{{ task['username'] }}</td>
+                <td>{{ task['email'] }}</td>
+                <td>{{ task['is_complete'] ? "complete" : "not complete" }}</td>
+                <td class="no-sort">{{ task['task_name'] }}</td>
+                <td><img style="width:220px; height: 120px;" src="{{ task['task_img'] }}" alt=""></td>
+
+                {% if  isGuest == false %}
+                    <td>
+                        {% if task['is_complete'] == false %}
+                            <button class="btn btn-sm btn-success btn-complete">Complete</button>
+                        {% endif %}
+
+                        {% if task['is_complete'] == true %}
+                            <button class="btn btn-sm btn-info btn-rollback">Rollback</button>
+                        {% endif %}
+
+                        {% if task['is_complete'] == false %}
+                            <a href="task/edit/{{ task['task_id'] }}" class="btn btn-sm btn-warning btn-edit">Edit</a>
+                        {% endif %}
+
+                        <button class="btn btn-sm btn-danger btn-delete">Delete</button>
+                    </td>
+                {% endif %}
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

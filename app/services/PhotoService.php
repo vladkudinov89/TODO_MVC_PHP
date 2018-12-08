@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Services\ImageAction\ImageAction;
@@ -11,7 +12,7 @@ class PhotoService implements PhotoServiceInterface
 
     public function addImage($image): string
     {
-        if (isset($image)) {
+        if (isset($image['name']) && empty($image['error'])) {
 
             $saveto = new ImageAction(
                 $image,
@@ -29,7 +30,7 @@ class PhotoService implements PhotoServiceInterface
 
     public function editPhoto($old_image, $image): string
     {
-        if (isset($image)) {
+        if (isset($image['name']) && empty($image['error'])) {
 
             $saveto = new ImageAction(
                 $image,

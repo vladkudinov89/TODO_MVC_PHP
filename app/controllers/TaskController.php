@@ -3,24 +3,29 @@
 namespace App\Controllers;
 
 use App\Models\TasksList;
+use App\Models\User;
 use App\Services\PhotoService;
+use App\Views\MainView;
 
 class TaskController
 {
     private $photoService;
+    protected $view;
+    protected $content;
 
     public function __construct()
     {
         $this->photoService = new PhotoService();
+        $this->view = new MainView();
     }
 
 
     public function actionIndex()
     {
-        $tasks = TasksList::getTaskLists();
-
-        require_once(ROOT . '/views/task/index.php');
-        return true;
+        $this->content['content'] = "task/index.tmpl";
+        $this->content['tasks'] =  TasksList::getTaskLists();
+        $this->content['isGuest'] = User::isGuest();
+        $this->view->generate($this->content);
     }
 
     public function actionAdd()
@@ -31,15 +36,18 @@ class TaskController
 
             $taskName = trim(filter_var($_POST['taskname'], FILTER_SANITIZE_STRING));
             $taskText = trim(filter_var($_POST['tasktext'], FILTER_SANITIZE_STRING));
-
+            $this->content['taskName'] = $taskName;
+            $this->content['taskText'] = $taskText;
             $errors = false;
 
             if (empty($taskName)) {
                 $errors[] = 'Name task is empty';
+                $this->content['errors'] = $errors;
             }
 
             if (empty($taskText)) {
                 $errors[] = 'Text task is empty';
+                $this->content['errors'] = $errors;
             }
 
             if ($errors == false) {
@@ -48,14 +56,15 @@ class TaskController
 
                 if ($result) {
                     $messages[] = "Task has been added!";
+                    $this->content['messages'] = $messages;
                     unset($taskName, $taskText, $_FILES['addTaskPhoto']);
                 }
 
             }
         }
 
-        require_once(ROOT . '/views/task/add.php');
-        return true;
+        $this->content['content'] = "task/add.tmpl";
+        $this->view->generate($this->content);
     }
 
     public
@@ -86,6 +95,10 @@ class TaskController
         $task_text = $taskStore['task_text'];
         $task_img = $taskStore['task_img'];
 
+        $this->content['task_name'] = $task_name;
+        $this->content['task_text'] = $task_text;
+        $this->content['task_img'] = '/'.$task_img;
+
         $result = false;
 
         if (isset($_POST['editTask'])) {
@@ -96,15 +109,17 @@ class TaskController
             $task_image = $_FILES['editTaskPhoto'];
 
             $task_img = $this->photoService->editPhoto($task_img, $task_image);
-
+            $this->content['task_img'] = '/'.$task_img;
             $errors = false;
 
             if (empty($task_name)) {
-                $errors[] = 'Name task is empty';
+                $errors[] = 'Name task must not be empty';
+                $this->content['errors'] = $errors;
             }
 
             if (empty($task_text)) {
-                $errors[] = 'Text task is empty';
+                $errors[] = 'Text task must not be empty';
+                $this->content['errors'] = $errors;
             }
 
             if ($errors == false) {
@@ -113,12 +128,13 @@ class TaskController
 
             if($result){
                 $messages[] = "Task is success edit!";
+                $this->content['messages'] = $messages;
             }
 
         }
-        require_once(ROOT . '/views/task/edit.php');
-        return true;
 
+        $this->content['content'] = "task/edit.tmpl";
+        $this->view->generate($this->content);
     }
 
     public
