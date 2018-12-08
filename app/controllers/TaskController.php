@@ -57,6 +57,8 @@ class TaskController
                 if ($result) {
                     $messages[] = "Task has been added!";
                     $this->content['messages'] = $messages;
+                    $this->content['taskName'] = '';
+                    $this->content['taskText'] = '';
                     unset($taskName, $taskText, $_FILES['addTaskPhoto']);
                 }
 
