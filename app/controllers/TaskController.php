@@ -38,8 +38,8 @@ class TaskController
 
             $imageRoute = $this->photoService->addImage($_FILES['addTaskPhoto']);
 
-            $taskName = trim(filter_var($_POST['taskname'], FILTER_SANITIZE_STRING));
-            $taskText = trim(filter_var($_POST['tasktext'], FILTER_SANITIZE_STRING));
+            $taskName = trim(filter_var(Request::get('taskname'), FILTER_SANITIZE_STRING));
+            $taskText = trim(filter_var(Request::get('tasktext'), FILTER_SANITIZE_STRING));
             $this->content['taskName'] = $taskName;
             $this->content['taskText'] = $taskText;
 
@@ -98,8 +98,8 @@ class TaskController
 
         if (Request::get('editTask')) {
 
-            $task_name = trim(filter_var($_POST['taskname'], FILTER_SANITIZE_STRING));
-            $task_text = trim(filter_var($_POST['tasktext'], FILTER_SANITIZE_STRING));
+            $task_name = trim(filter_var(Request::get('taskname'), FILTER_SANITIZE_STRING));
+            $task_text = trim(filter_var(Request::get('tasktext'), FILTER_SANITIZE_STRING));
 
             $task_image = $_FILES['editTaskPhoto'];
 

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Requests\Request;
 use App\Views\MainView;
 
 class UserController
@@ -20,21 +21,19 @@ class UserController
         $email = '';
         $password = '';
 
-        if (isset($_POST['submit'])) {
+        if (Request::get('signIn')) {
 
-            $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
-            $password = trim(filter_var($_POST['password'], FILTER_SANITIZE_STRING));
-
-            $errors = false;
+            $email = trim(filter_var(Request::get('email'), FILTER_SANITIZE_EMAIL));
+            $password = trim(filter_var(Request::get('password'), FILTER_SANITIZE_STRING));
 
             $userId = User::checkUserData($email, $password);
 
             if ($userId == false) {
-                $errors[] = 'Направильные данные для входа на сайт';
+                $errors[] = 'Your email/password are incorrect';
                 $this->content['errors'] = $errors;
             } else {
                 User::auth($userId);
-
+                unset($errors);
                 header("Location: /");
             }
         }
