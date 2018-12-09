@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\TasksList;
 use App\Models\User;
+use App\Requests\Request;
+use App\Requests\TaskValidation;
 use App\Services\PhotoService;
 use App\Views\MainView;
 
@@ -12,46 +14,36 @@ class TaskController
     private $photoService;
     protected $view;
     protected $content;
+    private $taskValidation;
 
     public function __construct()
     {
         $this->photoService = new PhotoService();
         $this->view = new MainView();
+        $this->taskValidation = new TaskValidation();
     }
 
 
     public function actionIndex()
     {
         $this->content['content'] = "task/index.tmpl";
-        $this->content['tasks'] =  TasksList::getTaskLists();
+        $this->content['tasks'] = TasksList::getTaskLists();
         $this->content['isGuest'] = User::isGuest();
         $this->view->generate($this->content);
     }
 
     public function actionAdd()
     {
-        if (isset($_POST['addTask'])) {
+        if (Request::get('addTask')) {
 
             $imageRoute = $this->photoService->addImage($_FILES['addTaskPhoto']);
 
-            $taskName = trim(filter_var($_POST['taskname'], FILTER_SANITIZE_STRING));
-            $taskText = trim(filter_var($_POST['tasktext'], FILTER_SANITIZE_STRING));
+            $taskName = trim(filter_var(Request::get('taskname'), FILTER_SANITIZE_STRING));
+            $taskText = trim(filter_var(Request::get('tasktext'), FILTER_SANITIZE_STRING));
             $this->content['taskName'] = $taskName;
             $this->content['taskText'] = $taskText;
-            $errors = false;
 
-            if (empty($taskName)) {
-                $errors[] = 'Name task is empty';
-                $this->content['errors'] = $errors;
-            }
-
-            if (empty($taskText)) {
-                $errors[] = 'Text task is empty';
-                $this->content['errors'] = $errors;
-            }
-
-            if ($errors == false) {
-
+            if ($this->taskValidation->rules()->passed()) {
                 $result = TasksList::add($taskName, $taskText, $imageRoute);
 
                 if ($result) {
@@ -61,8 +53,11 @@ class TaskController
                     $this->content['taskText'] = '';
                     unset($taskName, $taskText, $_FILES['addTaskPhoto']);
                 }
-
+            } else {
+                $this->content['errors'] = $this->taskValidation->rules()->errors();
             }
+
+
         }
 
         $this->content['content'] = "task/add.tmpl";
@@ -99,38 +94,27 @@ class TaskController
 
         $this->content['task_name'] = $task_name;
         $this->content['task_text'] = $task_text;
-        $this->content['task_img'] = '/'.$task_img;
+        $this->content['task_img'] = '/' . $task_img;
 
-        $result = false;
+        if (Request::get('editTask')) {
 
-        if (isset($_POST['editTask'])) {
-
-            $task_name = trim(filter_var($_POST['taskname'], FILTER_SANITIZE_STRING));
-            $task_text = trim(filter_var($_POST['tasktext'], FILTER_SANITIZE_STRING));
+            $task_name = trim(filter_var(Request::get('taskname'), FILTER_SANITIZE_STRING));
+            $task_text = trim(filter_var(Request::get('tasktext'), FILTER_SANITIZE_STRING));
 
             $task_image = $_FILES['editTaskPhoto'];
 
             $task_img = $this->photoService->editPhoto($task_img, $task_image);
-            $this->content['task_img'] = '/'.$task_img;
-            $errors = false;
+            $this->content['task_img'] = '/' . $task_img;
 
-            if (empty($task_name)) {
-                $errors[] = 'Name task must not be empty';
-                $this->content['errors'] = $errors;
-            }
-
-            if (empty($task_text)) {
-                $errors[] = 'Text task must not be empty';
-                $this->content['errors'] = $errors;
-            }
-
-            if ($errors == false) {
+            if ($this->taskValidation->rules()->passed()) {
                 $result = TasksList::taskEdit($taskId, $task_name, $task_text, $task_img);
-            }
 
-            if($result){
-                $messages[] = "Task is success edit!";
-                $this->content['messages'] = $messages;
+                if ($result) {
+                    $messages[] = "Task is success edit!";
+                    $this->content['messages'] = $messages;
+                }
+            } else {
+                $this->content['errors'] = $this->taskValidation->rules()->errors();
             }
 
         }
