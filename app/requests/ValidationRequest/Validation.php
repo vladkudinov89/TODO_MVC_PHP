@@ -29,6 +29,21 @@ class Validation
                                 $this->addError("{$item} must be maximum of {$rule_value} characters.");
                             }
                             break;
+                        case 'email':
+                            if (trim(filter_var($value, FILTER_VALIDATE_EMAIL))) {
+
+                            } else {
+                                $this->addError("{$item} must be email.");
+                            }
+                            break;
+                        case 'string':
+                           $string = trim(filter_var($value, FILTER_SANITIZE_STRING));
+                            if (is_string($string) && trim($string) !== '') {
+
+                            } else if (trim($string) === ''){
+                                $this->addError("{$item} must be string.");
+                            }
+                            break;
                     }
                 }
             }

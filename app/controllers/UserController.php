@@ -4,16 +4,19 @@ namespace App\Controllers;
 
 use App\Models\User;
 use App\Requests\Request;
+use App\Requests\ValidationRequest\LoginValidation;
 use App\Views\MainView;
 
 class UserController
 {
     protected $view;
     protected $content;
+    private $loginValidation;
 
     public function __construct()
     {
         $this->view = new MainView();
+        $this->loginValidation = new LoginValidation();
     }
 
     public function actionLogin()
@@ -23,18 +26,20 @@ class UserController
 
         if (Request::get('signIn')) {
 
-            $email = trim(filter_var(Request::get('email'), FILTER_SANITIZE_EMAIL));
-            $password = trim(filter_var(Request::get('password'), FILTER_SANITIZE_STRING));
+            if ($this->loginValidation->rules()->passed()) {
 
-            $userId = User::checkUserData($email, $password);
+                $userId = User::checkUserData(Request::get('email'), Request::get('password'));
 
-            if ($userId == false) {
-                $errors[] = 'Your email/password are incorrect';
-                $this->content['errors'] = $errors;
+                if ($userId == false) {
+                    $errors[] = 'Your email/password are incorrect';
+                    $this->content['errors'] = $errors;
+                } else {
+                    User::auth($userId);
+                    unset($errors);
+                    header("Location: /");
+                }
             } else {
-                User::auth($userId);
-                unset($errors);
-                header("Location: /");
+                $this->content['errors'] = $this->loginValidation->rules()->errors();
             }
         }
 
