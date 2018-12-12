@@ -5,9 +5,8 @@ namespace App\Controllers;
 use App\Models\User;
 use App\Requests\Request;
 use App\Requests\ValidationRequest\LoginValidation;
-use App\Views\MainView;
 
-class UserController
+class UserController extends Controller
 {
     protected $view;
     protected $content;
@@ -15,7 +14,7 @@ class UserController
 
     public function __construct()
     {
-        $this->view = new MainView();
+        parent::__construct();
         $this->loginValidation = new LoginValidation();
     }
 
@@ -36,7 +35,7 @@ class UserController
                 } else {
                     User::auth($userId);
                     unset($errors);
-                    header("Location: /");
+                    $this->session->success("Success login!" , '/');
                 }
             } else {
                 $this->content['errors'] = $this->loginValidation->rules()->errors();
@@ -52,7 +51,7 @@ class UserController
     public function actionLogout()
     {
         unset($_SESSION['user']);
-        header("Location: /");
+        $this->session->info("You are logged out!" , '/');
     }
 
 }
