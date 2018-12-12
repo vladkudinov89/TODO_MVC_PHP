@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use App\Components\Session;
+use App\Components\Flashing;
 use App\Views\MainView;
 
 class Controller
@@ -11,7 +11,7 @@ class Controller
 
     public function __construct()
     {
-        $this->session = new Session();
+        $this->session = new Flashing();
         $this->view = new MainView();
     }
 }

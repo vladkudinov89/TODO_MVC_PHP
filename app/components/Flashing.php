@@ -2,7 +2,7 @@
 
 namespace App\Components;
 
-class Session
+class Flashing
 {
     const INFO = 'i';
     const SUCCESS = 's';

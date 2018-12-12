@@ -35,7 +35,7 @@ class UserController extends Controller
                 } else {
                     User::auth($userId);
                     unset($errors);
-                    $this->session->add("You is success login!" , '/');
+                    $this->session->success("Success login!" , '/');
                 }
             } else {
                 $this->content['errors'] = $this->loginValidation->rules()->errors();
@@ -51,7 +51,7 @@ class UserController extends Controller
     public function actionLogout()
     {
         unset($_SESSION['user']);
-        $this->session->add("You are logged out!" , '/');
+        $this->session->info("You are logged out!" , '/');
     }
 
 }
