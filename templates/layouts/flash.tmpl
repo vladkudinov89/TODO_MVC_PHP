@@ -1,7 +1,31 @@
-{% if flash_messages %}
+{% if flash_messages.s %}
     <ul>
-        {% for message in flash_messages %}
+        {% for message in flash_messages.s %}
             <li class="alert alert-success">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if flash_messages.i %}
+    <ul>
+        {% for message in flash_messages.i %}
+            <li class="alert alert-info">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if flash_messages.e %}
+    <ul>
+        {% for message in flash_messages.e %}
+            <li class="alert alert-danger">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if flash_messages.w %}
+    <ul>
+        {% for message in flash_messages.w %}
+            <li class="alert alert-warning">{{ message }}</li>
         {% endfor %}
     </ul>
 {% endif %}

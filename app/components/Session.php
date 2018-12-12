@@ -4,6 +4,20 @@ namespace App\Components;
 
 class Session
 {
+    const INFO = 'i';
+    const SUCCESS = 's';
+    const WARNING = 'w';
+    const ERROR = 'e';
+
+    protected $msgTypes = [
+        self::ERROR => 'error',
+        self::WARNING => 'warning',
+        self::SUCCESS => 'success',
+        self::INFO => 'info',
+    ];
+
+    const defaultType = self::INFO;
+
     protected $redirectUrl = null;
 
     protected function doRedirect()
@@ -15,9 +29,9 @@ class Session
         return $this;
     }
 
-    public function add($message, $redirectUrl = null)
+    public function add($message, $type = self::defaultType, $redirectUrl = null)
     {
-        $_SESSION['flash_messages'] = ['message' => $message];
+        $_SESSION['flash_messages'][$type] = ['message' => $message];
 
         if (!is_null($redirectUrl)) $this->redirectUrl = $redirectUrl;
 
@@ -26,16 +40,47 @@ class Session
         return $this;
     }
 
-    public function display()
+    public
+    function display()
     {
-        if (isset($_SESSION['flash_messages'])) {
+        $types = array_keys($this->msgTypes);
+
+        foreach ($types as $type) {
+
+            if (!isset($_SESSION['flash_messages'][$type]) || empty($_SESSION['flash_messages'][$type])) continue;
             $output = $_SESSION['flash_messages'];
+
             if (!is_null($output)) {
-                unset($_SESSION['flash_messages']);
+                unset($_SESSION['flash_messages'][$type]);
             }
             return $output;
+
         }
 
         return $this;
+    }
+
+    public
+    function success($message, $redirectUrl = null)
+    {
+        return $this->add($message, self::SUCCESS, $redirectUrl);
+    }
+
+    public
+    function error($message, $redirectUrl = null)
+    {
+        return $this->add($message, self::ERROR, $redirectUrl);
+    }
+
+    public
+    function info($message, $redirectUrl = null)
+    {
+        return $this->add($message, self::INFO, $redirectUrl);
+    }
+
+    public
+    function warning($message, $redirectUrl = null)
+    {
+        return $this->add($message, self::WARNING, $redirectUrl);
     }
 }

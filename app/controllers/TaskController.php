@@ -8,6 +8,9 @@ use App\Requests\Request;
 use App\Requests\ValidationRequest\TaskValidation;
 use App\Services\PhotoService;
 
+/**
+ * @method passed()
+ */
 class TaskController extends Controller
 {
     private $photoService;
@@ -102,7 +105,7 @@ class TaskController extends Controller
                 $result = TasksList::taskEdit($taskId, $task_name, $task_text, $task_img);
 
                 if ($result) {
-                    $this->session->add("Task ~ $task_name ~ is success edit!" , '/');
+                    $this->session->success("Task ~ $task_name ~ is success edit!" , '/');
                 }
             } else {
                 $this->content['errors'] = $this->taskValidation->rules()->errors();
