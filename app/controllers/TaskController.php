@@ -7,28 +7,26 @@ use App\Models\User;
 use App\Requests\Request;
 use App\Requests\ValidationRequest\TaskValidation;
 use App\Services\PhotoService;
-use App\Views\MainView;
 
-class TaskController
+class TaskController extends Controller
 {
     private $photoService;
-    protected $view;
     protected $content;
     private $taskValidation;
 
     public function __construct()
     {
+        parent::__construct();
         $this->photoService = new PhotoService();
-        $this->view = new MainView();
         $this->taskValidation = new TaskValidation();
+        $this->content['flash_messages'] =  $this->session->display();
     }
-
 
     public function actionIndex()
     {
-        $this->content['content'] = "task/index.tmpl";
         $this->content['tasks'] = TasksList::getTaskLists();
         $this->content['isGuest'] = User::isGuest();
+        $this->content['content'] = "task/index.tmpl";
         $this->view->generate($this->content);
     }
 
@@ -36,31 +34,21 @@ class TaskController
     {
         if (Request::get('addTask')) {
 
-            $imageRoute = $this->photoService->addImage($_FILES['addTaskPhoto']);
+            $task_name = trim(filter_var(Request::get('taskname'), FILTER_SANITIZE_STRING));
+            $task_text = trim(filter_var(Request::get('tasktext'), FILTER_SANITIZE_STRING));
 
-//            $oldTaskName = trim(filter_var(Request::get('taskname'), FILTER_SANITIZE_STRING));
-//            $oldTaskText = trim(filter_var(Request::get('tasktext'), FILTER_SANITIZE_STRING));
-//            $this->content['taskName'] = $oldTaskName;
-//            $this->content['taskText'] = $oldTaskText;
+            $imageRoute = $this->photoService->addImage($_FILES['addTaskPhoto']);
 
             if ($this->taskValidation->rules()->passed()) {
 
-                $result = TasksList::add(Request::get('taskname'), Request::get('tasktext'), $imageRoute);
-
-//                $this->content['taskName'] = Request::get('taskname');
-//                $this->content['taskText'] = Request::get('tasktext');
+                $result = TasksList::add($task_name,$task_text, $imageRoute);
 
                 if ($result) {
-                    $messages[] = "Task has been added!";
-                    $this->content['messages'] = $messages;
-                    $this->content['taskName'] = '';
-                    $this->content['taskText'] = '';
-                    unset($taskName, $taskText, $_FILES['addTaskPhoto']);
+                    $this->session->add("Task ~ $task_name ~ is success add!" , '/');
                 }
             } else {
                 $this->content['errors'] = $this->taskValidation->rules()->errors();
             }
-
 
         }
 
@@ -114,8 +102,7 @@ class TaskController
                 $result = TasksList::taskEdit($taskId, $task_name, $task_text, $task_img);
 
                 if ($result) {
-                    $messages[] = "Task is success edit!";
-                    $this->content['messages'] = $messages;
+                    $this->session->add("Task ~ $task_name ~ is success edit!" , '/');
                 }
             } else {
                 $this->content['errors'] = $this->taskValidation->rules()->errors();
