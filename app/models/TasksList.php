@@ -88,9 +88,9 @@ class TasksList
         $db = Db::getConnection();
 
         $sql = "UPDATE task_list
-        SET 
-        task_name=:task_name , 
-        task_text=:task_text ,  
+        SET
+        task_name=:task_name ,
+        task_text=:task_text ,
         task_img = :task_img
         WHERE id=:taskId";
         $result = $db->prepare($sql);
@@ -131,4 +131,5 @@ class TasksList
         }
         return $taskStore;
     }
+
 }

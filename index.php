@@ -14,5 +14,7 @@ require ROOT . '/vendor/autoload.php';
 $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
 
+require 'app/config/database.php';
+
 $router = new Router();
 $router->run();
