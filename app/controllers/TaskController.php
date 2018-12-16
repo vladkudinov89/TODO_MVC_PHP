@@ -4,11 +4,8 @@ namespace App\Controllers;
 
 use App\Actions\TaskListPresenter;
 use App\Models\TasksList;
-use App\Models\TodosEloq;
 use App\Models\User;
-use App\Models\UserEloq;
 use App\Repository\TaskListRepository;
-use App\Repository\TaskListRepositoryInterface;
 use App\Requests\Request;
 use App\Requests\ValidationRequest\TaskValidation;
 use App\Services\PhotoService;
@@ -82,11 +79,11 @@ class TaskController extends Controller
 
     public function actionEdit($taskId)
     {
-        $taskStore = TasksList::getCurrentTask($taskId);
+        $taskStore = $this->task_list->getCurrentTask($taskId);
 
-        $task_name = $taskStore['task_name'];
-        $task_text = $taskStore['task_text'];
-        $task_img = $taskStore['task_img'];
+        $task_name = $taskStore->task_name;
+        $task_text = $taskStore->task_text;
+        $task_img = $taskStore->task_img;
 
         $this->content['task_name'] = $task_name;
         $this->content['task_text'] = $task_text;
@@ -104,7 +101,7 @@ class TaskController extends Controller
 
             if ($this->taskValidation->rules()->passed()) {
 
-                $result = TodosEloq::findOrFail($taskId)
+                $result = TasksList::findOrFail($taskId)
                     ->update([
                         'task_name' => $task_name,
                         'task_text' => $task_text,

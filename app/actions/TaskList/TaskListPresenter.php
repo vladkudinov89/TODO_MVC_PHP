@@ -2,11 +2,11 @@
 
 namespace App\Actions;
 
-use App\Models\TodosEloq;
+use App\Models\TasksList;
 
 class TaskListPresenter
 {
-    public static function present(TodosEloq $tasksLists): array
+    public static function present(TasksList $tasksLists): array
     {
         return [
             'task_id' => $tasksLists->id,

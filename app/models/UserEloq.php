@@ -25,7 +25,7 @@ class UserEloq extends Model
     public function todo()
 
     {
-        return $this->hasOne(TodosEloq::class);
+        return $this->hasOne(TasksList::class);
 
     }
 }
