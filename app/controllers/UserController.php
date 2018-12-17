@@ -33,7 +33,7 @@ class UserController extends Controller
                     $errors[] = 'Your email/password are incorrect';
                     $this->content['errors'] = $errors;
                 } else {
-                    User::auth($userId);
+                   User::auth($userId);
                     unset($errors);
                     $this->session->success("Success login!" , '/');
                 }
@@ -50,7 +50,7 @@ class UserController extends Controller
 
     public function actionLogout()
     {
-        unset($_SESSION['user']);
+        User::logout();
         $this->session->info("You are logged out!" , '/');
     }
 

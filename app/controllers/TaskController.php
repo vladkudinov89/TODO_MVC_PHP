@@ -2,8 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Actions\TaskListPresenter;
 use App\Models\TasksList;
 use App\Models\User;
+use App\Repository\TaskListRepository;
 use App\Requests\Request;
 use App\Requests\ValidationRequest\TaskValidation;
 use App\Services\PhotoService;
@@ -14,19 +16,27 @@ class TaskController extends Controller
     private $photoService;
     protected $content;
     private $taskValidation;
+    private $task_list;
 
     public function __construct()
     {
         parent::__construct();
         $this->photoService = new PhotoService();
         $this->taskValidation = new TaskValidation();
-        $this->content['flash_messages'] =  $this->session->display();
+        $this->content['flash_messages'] = $this->session->display();
+        $this->task_list = new TaskListRepository();
     }
 
     public function actionIndex()
     {
-        $this->content['tasks'] = TasksList::getTaskLists();
-        $this->content['isGuest'] = User::isGuest();
+        $task_present = [];
+        foreach ($this->task_list->findAll() as $tasksList) {
+            $task_present[] = TaskListPresenter::present($tasksList);
+        }
+
+        $this->content['tasks'] = $task_present;
+        $this->content['isAdmin'] = User::isAdmin();
+        $this->content['isLogged'] = User::isLogged();
         $this->content['content'] = "task/index.tmpl";
         $this->view->generate($this->content);
     }
@@ -42,10 +52,10 @@ class TaskController extends Controller
 
             if ($this->taskValidation->rules()->passed()) {
 
-                $result = TasksList::add($task_name,$task_text, $imageRoute);
+                $task_test = $this->task_list->save($task_name, $task_text, $imageRoute);
 
-                if ($result) {
-                    $this->session->success("Task ~ $task_name ~ is success add!" , '/');
+                if ($task_test) {
+                    $this->session->success("Task ~ $task_name ~ is success add!", '/');
                 }
             } else {
                 $this->content['errors'] = $this->taskValidation->rules()->errors();
@@ -60,30 +70,22 @@ class TaskController extends Controller
     public
     function actionComplete($taskId)
     {
-        $completeTask = TasksList::taskComplete($taskId);
-        if ($completeTask) {
-            return true;
-        }
-        return false;
+        $this->task_list->actionComplete($taskId);
     }
 
     public
     function actionRollback($taskId)
     {
-        $rollbackTask = TasksList::taskRollback($taskId);
-        if ($rollbackTask) {
-            return true;
-        }
-        return false;
+        $this->task_list->actionRollback($taskId);
     }
 
     public function actionEdit($taskId)
     {
-        $taskStore = TasksList::getCurrentTask($taskId);
+        $taskStore = $this->task_list->getCurrentTask($taskId);
 
-        $task_name = $taskStore['task_name'];
-        $task_text = $taskStore['task_text'];
-        $task_img = $taskStore['task_img'];
+        $task_name = $taskStore->task_name;
+        $task_text = $taskStore->task_text;
+        $task_img = $taskStore->task_img;
 
         $this->content['task_name'] = $task_name;
         $this->content['task_text'] = $task_text;
@@ -100,10 +102,16 @@ class TaskController extends Controller
             $this->content['task_img'] = '/' . $task_img;
 
             if ($this->taskValidation->rules()->passed()) {
-                $result = TasksList::taskEdit($taskId, $task_name, $task_text, $task_img);
+
+                $result = TasksList::findOrFail($taskId)
+                    ->update([
+                        'task_name' => $task_name,
+                        'task_text' => $task_text,
+                        'task_img' => $task_img
+                    ]);
 
                 if ($result) {
-                    $this->session->info("Task ~ $task_name ~ is success edit!" , '/');
+                    $this->session->info("Task ~ $task_name ~ is success edit!", '/');
                 }
             } else {
                 $this->content['errors'] = $this->taskValidation->rules()->errors();
@@ -118,10 +126,6 @@ class TaskController extends Controller
     public
     function actionDelete($taskId)
     {
-        $deleteTask = TasksList::taskDelete($taskId);
-        if ($deleteTask) {
-            return true;
-        }
-        return false;
+        $this->task_list->actionDelete($taskId);
     }
 }

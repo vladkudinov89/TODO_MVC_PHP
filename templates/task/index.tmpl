@@ -6,7 +6,7 @@
         <div class="pull-left">
             <a href="task/add" class="btn btn-success btn-md">Add Task</a>
         </div>
-        {% if  isGuest == false %}
+        {% if  isAdmin == true %}
             <div class="pull-right alert alert-success" role="alert">
                 Hello,Admin
             </div>
@@ -26,7 +26,7 @@
             <th scope="col">Task name</th>
             <th scope="col">Image</th>
 
-            {% if  isGuest == false %}
+            {% if  isAdmin == true %}
                 <th scope="col">Action's Task</th>
             {% endif %}
         </tr>
@@ -35,27 +35,27 @@
 
         {% for task in tasks %}
             <tr
-                    data-task-id="{{ task['task_id'] }}"
-                    class="{{ task['is_complete'] ? "not-complete" : "" }}">
+                    data-task-id="{{ task.task_id }}"
+                    class="{{ task.task_isComplete ? "not-complete" : "" }}">
                 <td>{{ loop.index }}</td>
-                <td>{{ task['username'] }}</td>
-                <td>{{ task['email'] }}</td>
-                <td>{{ task['is_complete'] ? "complete" : "not complete" }}</td>
+                <td>{{ task.task_username }}</td>
+                <td>{{ task.task_useremail }}</td>
+                <td>{{ task.task_isComplete ? "complete" : "not complete" }}</td>
                 <td class="no-sort">{{ task['task_name'] }}</td>
-                <td><img style="width:220px; height: 120px;" src="{{ task['task_img'] }}" alt=""></td>
+                <td><img style="width:220px; height: 120px;" src="{{ task.task_img }}" alt=""></td>
 
-                {% if  isGuest == false %}
+                {% if  isAdmin == true %}
                     <td>
-                        {% if task['is_complete'] == false %}
+                        {% if task.task_isComplete == false %}
                             <button class="btn btn-sm btn-success btn-complete">Complete</button>
                         {% endif %}
 
-                        {% if task['is_complete'] == true %}
+                        {% if task.task_isComplete == true %}
                             <button class="btn btn-sm btn-info btn-rollback">Rollback</button>
                         {% endif %}
 
-                        {% if task['is_complete'] == false %}
-                            <a href="task/edit/{{ task['task_id'] }}" class="btn btn-sm btn-warning btn-edit">Edit</a>
+                        {% if task.task_isComplete == false %}
+                            <a href="task/edit/{{ task.task_id }}" class="btn btn-sm btn-warning btn-edit">Edit</a>
                         {% endif %}
 
                         <button class="btn btn-sm btn-danger btn-delete">Delete</button>
