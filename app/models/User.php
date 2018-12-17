@@ -1,88 +1,83 @@
 <?php
-
 namespace App\Models;
 
-use App\Components\Db;
-use PDO;
+use Illuminate\Database\Eloquent\Model;
 
-class User
+class User extends Model
 {
-    public static function register($name, $email, $password)
+    protected $table = "users";
+
+    protected $fillable = [
+
+        'username', 'email', 'password','is_admin'
+
+    ];
+
+
+    protected $hidden = [
+
+        'password'
+
+    ];
+
+    public function todo()
+
     {
+        return $this->hasOne(TasksList::class);
 
-        $db = Db::getConnection();
-
-        $sql = 'INSERT INTO users (username, email, password) '
-            . 'VALUES (:username, :email, :password)';
-
-        $result = $db->prepare($sql);
-        $result->bindParam(':username', $name, PDO::PARAM_STR);
-        $result->bindParam(':email', $email, PDO::PARAM_STR);
-        $result->bindParam(':password', $password, PDO::PARAM_STR);
-
-        return $result->execute();
     }
 
-    public static function isAdmin()
+    public static function checkUserData(string $email,string $password): int
     {
-        $db = Db::getConnection();
+        $auth = User::where([
+            'email' => $email,
+            'password' => $password,
+        ])->first();
 
-        $sql = 'SELECT is_admin FROM users WHERE is_admin = 1';
-
-        $result = $db->prepare($sql);
-        $result->bindParam(':userId', $userId, PDO::PARAM_INT);
-
-
-        $result->setFetchMode(PDO::FETCH_ASSOC);
-        $result->execute();
-
-        return $result->fetch();
-    }
-
-    public static function checkUserData($email, $password)
-    {
-        $db = Db::getConnection();
-
-        $sql = 'SELECT * FROM users WHERE email=:email AND password=:password';
-        $result = $db->prepare($sql);
-        $result->bindParam(':email', $email, PDO::PARAM_INT);
-        $result->bindParam(':password', $password, PDO::PARAM_INT);
-
-        $result->execute();
-
-        $user = $result->fetch();
-
-        if ($user) {
-            return $user['id'];
+        if(isset($auth->id))
+        {
+            return $auth->id;
         }
 
         return false;
 
     }
 
+    public static function isAdmin(): bool
+    {
+        if (isset($_SESSION['user'])) {
+            return (bool)$_SESSION['user']['is_admin'];
+        }
+        return false;
+    }
+
     public static function auth($userId)
     {
-        $_SESSION['user'] = $userId;
+        $userAuth = User::where([
+            'id' => $userId
+        ])->first();
+
+        $userInfo = [
+          'id' => $userAuth->id,
+          'username' => $userAuth->username,
+          'email' => $userAuth->email,
+          'is_admin' => $userAuth->is_admin,
+        ];
+
+        $_SESSION['user'] = $userInfo;
     }
 
-    public static function checkLogged()
+    public static function logout()
     {
-
-
-        if (isset($_SESSION['user'])) {
-            return $_SESSION['user'];
-        }
-
-        header("Location: /user/login");
-
+        unset($_SESSION['user']);
     }
 
-    public static function isGuest()
+    public static function isLogged()
     {
-
         if (isset($_SESSION['user'])) {
-            return false;
+            return true;
         }
-        return true;
+
+        return false;
     }
 }

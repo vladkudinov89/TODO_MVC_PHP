@@ -6,7 +6,7 @@
         <div class="pull-left">
             <a href="task/add" class="btn btn-success btn-md">Add Task</a>
         </div>
-        {% if  isGuest == false %}
+        {% if  isAdmin == true %}
             <div class="pull-right alert alert-success" role="alert">
                 Hello,Admin
             </div>
@@ -26,7 +26,7 @@
             <th scope="col">Task name</th>
             <th scope="col">Image</th>
 
-            {% if  isGuest == false %}
+            {% if  isAdmin == true %}
                 <th scope="col">Action's Task</th>
             {% endif %}
         </tr>
@@ -44,7 +44,7 @@
                 <td class="no-sort">{{ task['task_name'] }}</td>
                 <td><img style="width:220px; height: 120px;" src="{{ task.task_img }}" alt=""></td>
 
-                {% if  isGuest == false %}
+                {% if  isAdmin == true %}
                     <td>
                         {% if task.task_isComplete == false %}
                             <button class="btn btn-sm btn-success btn-complete">Complete</button>

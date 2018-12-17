@@ -33,8 +33,10 @@ class TaskController extends Controller
         foreach ($this->task_list->findAll() as $tasksList) {
             $task_present[] = TaskListPresenter::present($tasksList);
         }
+
         $this->content['tasks'] = $task_present;
-        $this->content['isGuest'] = User::isGuest();
+        $this->content['isAdmin'] = User::isAdmin();
+        $this->content['isLogged'] = User::isLogged();
         $this->content['content'] = "task/index.tmpl";
         $this->view->generate($this->content);
     }
