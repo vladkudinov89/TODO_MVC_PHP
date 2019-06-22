@@ -13,8 +13,8 @@ class TaskListPresenter
             'task_name' => $tasksLists->task_name,
             'task_text' => $tasksLists->task_text,
             'task_img' => $tasksLists->task_img,
-            'task_username' => $tasksLists->user->username,
-            'task_useremail' => $tasksLists->user->email,
+            'task_username' => $tasksLists->user->username ?? 'unknown',
+            'task_useremail' => $tasksLists->user->email ?? 'unknown',
             'task_isComplete' => $tasksLists->is_complete
         ];
 
