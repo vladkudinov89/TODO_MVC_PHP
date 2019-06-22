@@ -3,9 +3,11 @@
 {% block content %}
 
     <div class="form-group">
+     {% if  isLogged == true %}
         <div class="pull-left">
             <a href="task/add" class="btn btn-success btn-md">Add Task</a>
         </div>
+     {% endif %}
         {% if  isAdmin == true %}
             <div class="pull-right alert alert-success" role="alert">
                 Hello,Admin
