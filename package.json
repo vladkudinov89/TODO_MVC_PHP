@@ -16,7 +16,7 @@
     "laravel-mix": "^2.1.14"
   },
   "dependencies": {
-    "bootstrap": "3.3.7",
+    "bootstrap": "3.4.1",
     "jquery": "^3.3.1",
     "datatables-all": "latest",
     "font-awesome": "^4.7.0"
