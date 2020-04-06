@@ -25,6 +25,10 @@ To start your containers you have only type next command:
 ```
 make docker-up
 ```
+Make sure that upload directory have permission.
+```
+sudo chmod -R 777 upload
+```
 Before login in project. Route `http://localhost:8080/user/login`:
 `login`: admin@email.com
 `password`: password
